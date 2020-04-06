@@ -1,0 +1,3 @@
+/home/dan/Documents/Second_year/CSA/LA_CSA_project/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/dan/Documents/Second_year/CSA/LA_CSA_project/cmake-build-debug/CMakeFiles/LA_CSA_project.dir
+/home/dan/Documents/Second_year/CSA/LA_CSA_project/cmake-build-debug/CMakeFiles/edit_cache.dir
