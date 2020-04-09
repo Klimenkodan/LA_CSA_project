@@ -1,4 +1,3 @@
-
 #ifndef LA_CSA_PROJECT_HELPER_FUNCTIONS_H
 #define LA_CSA_PROJECT_HELPER_FUNCTIONS_H
 
@@ -14,3 +13,5 @@ auto read_file_into_memory(std::basic_ifstream<CharT, Traits>& in, Allocator all
 Matrix* read_matrix_conf(const char* file_name);
 
 std::string number_repr(double num);
+
+bool check_valid(int row_num, int col_num, int weight, int height);

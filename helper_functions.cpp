@@ -37,7 +37,7 @@ Matrix* read_matrix_conf(const char* file_name) {
 	const char* temp = "";
 	char * end;
 	size_t height = 0;
-	size_t weight = 0;
+	size_t width = 0;
 	for (auto c: filev) {
 		if (c == '\n') {
 			++height;
@@ -59,12 +59,12 @@ Matrix* read_matrix_conf(const char* file_name) {
 	}
 
 	std::cout << height << std::endl;
-	weight = res.size() / height;
+	width = res.size() / height;
 
-	auto* matrix = new Matrix(height, weight);
+	auto* matrix = new Matrix(height, width);
 	for (size_t i=0; i < height; i++) {
-		for (size_t j=0; j < weight; j++) {
-			matrix->set_element(i, j, res[i * weight + j]);
+		for (size_t j=0; j < width; j++) {
+			matrix->set_element(i, j, res[i * width + j]);
 		}
 	}
 	return matrix;
@@ -81,4 +81,8 @@ std::string number_repr(double num) {
 		return std::to_string(num);
 	}
 
+}
+
+bool check_valid(int row_num, int col_num, int width, int height) {
+	return ( 0 <= row_num && row_num < height && 0 <= col_num  && col_num < width);
 }

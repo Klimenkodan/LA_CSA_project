@@ -20,6 +20,7 @@ CMakeFiles/LA_CSA_project.dir/matrix_operations.cpp.o: ../matrix_operations.cpp
 CMakeFiles/LA_CSA_project.dir/matrix_operations.cpp.o: ../matrix_operations.h
 
 CMakeFiles/LA_CSA_project.dir/vector_operations.cpp.o: ../matrix.h
+CMakeFiles/LA_CSA_project.dir/vector_operations.cpp.o: ../matrix_operations.h
 CMakeFiles/LA_CSA_project.dir/vector_operations.cpp.o: ../vector_operations.cpp
 CMakeFiles/LA_CSA_project.dir/vector_operations.cpp.o: ../vector_operations.h
 

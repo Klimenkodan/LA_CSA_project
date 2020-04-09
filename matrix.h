@@ -7,16 +7,16 @@
 
 class Matrix {
 public:
-	int weight;
+	int width;
 	int height;
 	double* matrix;
 	Matrix(int m, int n) {
-		if (m == 0 || n == 0) {
-			std::cout<< "matrix can not be of size 0" << std::endl;
+		if (m <= 0 || n <= 0) {
+			std::cout<< "matrix can not be of size smaller or equal to zero" << std::endl;
 			throw;
 		}
-		matrix = new double[m * n];
-		weight = n;
+		matrix = new double[m * n]{0};
+		width = n;
 		height = m;
 	}
 
@@ -24,7 +24,11 @@ public:
 
 	void set_element(int row_num, int col_num, double el);
 
+	bool equal(Matrix* b);
+
 	void scalar_multiply(double scalar);
+
+	Matrix* copy();
 
 	std::string representation();
 };

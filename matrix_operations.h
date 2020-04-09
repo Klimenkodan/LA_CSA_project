@@ -7,14 +7,25 @@
 #include <iostream>
 #include "matrix.h"
 
-double add_or_subtract(double a, double b, bool add);
-
 bool sizes_equal(const Matrix* a, const Matrix* b);
-
-Matrix* add_subtract(Matrix *a, Matrix *b, bool add);
 
 Matrix* add_matrix(Matrix* a, Matrix* b);
 
 Matrix* subtract_matrix(Matrix* a, Matrix* b);
 
 Matrix* multiply_matrix(Matrix* a, Matrix* b);
+
+Matrix* scalar_multiply(Matrix* a, double mul);
+
+Matrix* row_echelon(Matrix* a);
+
+double determinant(Matrix* a );
+
+int rank(Matrix * a);
+
+Matrix* inverse(Matrix* a);
+
+Matrix* identity(int num_rows); // need to be deleted
+
+Matrix* solve_equation(Matrix* matrix, Matrix* vector);
+

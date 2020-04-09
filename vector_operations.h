@@ -18,7 +18,9 @@ bool collinear(Matrix*a , Matrix* b);
 
 bool collinear(std::vector<double>* a, std::vector<double>* b);
 
-std::vector<Matrix*> gram_schmidt(std::vector<Matrix*>);
+std::vector<Matrix*>* gram_schmidt(std::vector<Matrix*>*);
+
+std::vector<Matrix*>* gram_schmidt(Matrix** vectors);
 
 std::vector<std::vector<double>> gram_schmidt(std::vector<std::vector<double>>);
 
