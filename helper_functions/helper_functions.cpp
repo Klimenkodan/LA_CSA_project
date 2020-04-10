@@ -5,6 +5,8 @@
 #include <fstream>
 #include <iostream>
 #include <cstring>
+#include <sstream>
+
 #define ERROR 0.000001
 
 template <typename CharT, typename Traits,
@@ -30,44 +32,48 @@ auto read_file_into_memory(std::basic_ifstream<CharT, Traits>& in, Allocator all
 	return container;
 }
 
-Matrix* read_matrix_conf(const char* file_name) {
+// Helper function for read_matrix_conf
+// Splits str by delimeter char
+std::vector<std::string> split(const std::string strToSplit, char delimeter)
+{
+	std::stringstream ss(strToSplit);
+	std::string item;
+	std::vector<std::string> splittedStrings;
+	while (std::getline(ss, item, delimeter))
+	{
+		splittedStrings.push_back(item);
+	}
+	return splittedStrings;
+}
+
+
+Matrix* read_matrix_conf(int m, int n, const char* file_name) {
 	std::ifstream file(file_name);
 	auto filev = read_file_into_memory(file);
-	std::vector<double> res;
-	const char* temp = "";
-	char * end;
-	size_t height = 0;
-	size_t width = 0;
+	std::vector<std::string> rows;
+	int r = 0;
+	rows.emplace_back("");
 	for (auto c: filev) {
 		if (c == '\n') {
-			++height;
-			res.emplace_back(strtod(temp, &end));
-			temp = "";
+			r++;
+			rows.emplace_back("");
 		}
-
-		else if (c == ' ') {
-			res.emplace_back(strtod(temp, &end));
-			temp = "";
-		}
-
 		else {
-			temp += c;
+			rows[r] += c;
 		}
 	}
-	if (strcmp(temp, "") != 0) {
-		res.emplace_back(strtod(temp, &end));
-	}
-
-	std::cout << height << std::endl;
-	width = res.size() / height;
-
-	auto* matrix = new Matrix(height, width);
-	for (size_t i=0; i < height; i++) {
-		for (size_t j=0; j < width; j++) {
-			matrix->set_element(i, j, res[i * width + j]);
+	auto* res = new Matrix(m, n);
+	int x = 0;
+	for (auto str: rows) {
+		int y = 0;
+		auto splitted = split(str, ' ');
+		for (auto snum: splitted) {
+			res->set_element(x, y, std::stod(snum));
+			y++;
 		}
+		x++;
 	}
-	return matrix;
+	return res;
 }
 
 
@@ -86,3 +92,4 @@ std::string number_repr(double num) {
 bool check_valid(int row_num, int col_num, int width, int height) {
 	return ( 0 <= row_num && row_num < height && 0 <= col_num  && col_num < width);
 }
+

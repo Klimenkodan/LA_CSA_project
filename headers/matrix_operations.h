@@ -19,8 +19,6 @@ Matrix* scalar_multiply(Matrix* a, double mul);
 
 Matrix* row_echelon(Matrix* a);
 
-double determinant(Matrix* a );
-
 int rank(Matrix * a);
 
 Matrix* inverse(Matrix* a);
@@ -31,3 +29,4 @@ Matrix* solve_equation(Matrix* matrix, Matrix* vector);
 
 Matrix* transpose(Matrix* m);
 
+double determinant(Matrix* matrix);

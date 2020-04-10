@@ -1,4 +1,5 @@
 #include <vector>
+#include <cmath>
 #include "../headers/matrix_operations.h"
 
 double add_or_subtract(double a, double b, bool add) {
@@ -221,3 +222,20 @@ Matrix* transpose(Matrix* m) {
 	return res;
 }
 
+bool check_square(Matrix* matrix){
+	return matrix->width == matrix->height;
+}
+
+double determinant(Matrix* matrix){
+	if ( !check_square(matrix) ){
+		std::cout << "Non-square matrices have no determinants ";
+		return -1;
+	}
+	matrix = row_echelon(matrix);
+	double det = 1;
+	for (int i = 0; i < matrix->height; i++){
+		det *= matrix->get_element( i, i );
+	}
+	det = round( det * pow(10,5) ) / pow(10,5);
+	return det;
+}
