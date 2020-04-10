@@ -1,8 +1,8 @@
 #include <iostream>
-#include "vector_operations.h"
-#include "matrix_operations.h"
+#include "../headers/vector_operations.h"
+#include "../headers/matrix_operations.h"
 #include <map>
-#include "matrix.h"
+#include "../headers/matrix.h"
 
 bool is_vector( Matrix* a) {
 	return a->height == 1 || a->width == 1;
@@ -85,24 +85,3 @@ bool collinear(std::vector<double>* a,  std::vector<double>* b) {
 	}
 	return true;
 }
-
-std::vector<Matrix*>* gram_shmidt(std::vector<Matrix*>* vectors) {
-	auto *gram = new std::vector<Matrix*>;
-	gram->emplace_back(vectors->at(0));
-	Matrix* new_vector;
-	Matrix* intermediate;
-	for (size_t i = 1; i < vectors->size(); i++){
-		new_vector = vectors->at(i);
-		for (size_t j = 0; j < gram->size(); j++) {
-			intermediate = scalar_multiply(gram->at(i), dot_product(new_vector, gram->at(i)) / dot_product(gram->at(i), gram->at(i)));
-			new_vector = subtract_matrix(new_vector, intermediate);
-		}
-		gram->emplace_back(new_vector);
-	}
-	return gram;
-}
-
-
-//std::vector<std::vector<double>> gram_shmidt( std::vector<std::vector<double>>) {
-//
-//}

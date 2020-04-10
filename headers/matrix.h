@@ -9,16 +9,11 @@ class Matrix {
 public:
 	int width;
 	int height;
+private:
 	double* matrix;
-	Matrix(int m, int n) {
-		if (m <= 0 || n <= 0) {
-			std::cout<< "matrix can not be of size smaller or equal to zero" << std::endl;
-			throw;
-		}
-		matrix = new double[m * n]{0};
-		width = n;
-		height = m;
-	}
+public:
+
+	Matrix(int m, int n);
 
 	double get_element(int row_num, int col_num);
 

@@ -29,3 +29,5 @@ Matrix* identity(int num_rows); // need to be deleted
 
 Matrix* solve_equation(Matrix* matrix, Matrix* vector);
 
+Matrix* transpose(Matrix* m);
+

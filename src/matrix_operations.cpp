@@ -1,5 +1,5 @@
 #include <vector>
-#include "matrix_operations.h"
+#include "../headers/matrix_operations.h"
 
 double add_or_subtract(double a, double b, bool add) {
 	return add ? a + b: a - b;
@@ -71,8 +71,11 @@ Matrix* identity(int num_rows) {
 
 Matrix* scalar_multiply(Matrix* a, double mul) {
 	auto* b = new Matrix(a->height, a->width);
-	for (int i =0; i < a->height *a->width; i++) {
-		b->matrix[i] = a->matrix[i] * mul;
+	for (int i =0; i < a->height; i++) {
+		for (int j =0; j < a->height * a->width; j++) {
+			b->set_element(i, j, a->get_element(i, j) * mul);
+		}
+
 	}
 	return b;
 }
@@ -114,12 +117,15 @@ Matrix* inverse(Matrix* a) {
 	Matrix* b = a->copy();
 	Matrix* ident = identity(a->width);
 	int cur_line = 0;
+	double div;
 	double coeff;
 	double interm;
 	double interm_id;
 	int j = 0;
 	for (j = 0; j < a->width; j++) {
 		for (int i = cur_line; i < a->height; i++) {
+			std::cout << b->representation() << std::endl;
+			std::cout << ident->representation() << std::endl;
 			if (b->get_element(i, j) != 0) {
 				if (i != cur_line) {
 					for (int k = 0; k < a->width; k++) {
@@ -132,8 +138,9 @@ Matrix* inverse(Matrix* a) {
 						b->set_element(cur_line, k, interm);
 					}
 				}
+				div = b->get_element(cur_line, j);
 				for (int p = 0; p < cur_line; p++) {
-					coeff =  b->get_element(p, j) / b->get_element(cur_line, j);
+					coeff =  b->get_element(p, j) / div;
 					for (int q = 0; q < a->width; q++) {
 						ident->set_element(p, q, ident->get_element(p, q) - (coeff * ident->get_element(cur_line, q)));
 
@@ -141,18 +148,21 @@ Matrix* inverse(Matrix* a) {
 					}
 				}
 
-				for (int q = 0; q < a->width; q++) {
-					ident->set_element(cur_line, q, ident->get_element(cur_line, q) / b->get_element(cur_line, j));
-					b->set_element(cur_line, q, b->get_element(cur_line, q) / b->get_element(cur_line, j));
-				}
+
 
 				for (int r = cur_line + 1; r < a->height; r++) {
-					coeff =  b->get_element(r, j) / b->get_element(cur_line, j);
+					coeff =  b->get_element(r, j) / div;
 					for (int q = 0; q < a->width; q++) {
 						ident->set_element(r, q, ident->get_element(r, q) - (coeff * ident->get_element(cur_line, q)));
 
 						b->set_element(r, q, b->get_element(r, q) - (coeff * b->get_element(cur_line, q)));
 					}
+				}
+
+
+				for (int q = 0; q < a->width; q++) {
+					ident->set_element(cur_line, q, ident->get_element(cur_line, q) / div);
+					b->set_element(cur_line, q, b->get_element(cur_line, q) / div);
 				}
 
 				cur_line ++;
@@ -165,7 +175,6 @@ Matrix* inverse(Matrix* a) {
 		std::cout << "the matrix is not invertible" << std::endl;
 		return nullptr;
 	}
-	std::cout << b->representation()<< std::endl;
 	return ident;
 }
 
@@ -184,11 +193,11 @@ int rank(Matrix * a) {
 			return rank;
 		}
 	}
+	return rank;
 }
 
 Matrix* solve_equation(Matrix* matrix, Matrix* vector) {
 	Matrix* inv = inverse(matrix);
-//	std::cout << inv->representation() << std::endl;
 	if (inv == nullptr) {
 		return nullptr;
 	}
@@ -200,3 +209,15 @@ Matrix* solve_equation(Matrix* matrix, Matrix* vector) {
 
 	return solution;
 }
+
+Matrix* transpose(Matrix* m) {
+	auto* res = new Matrix(m->width, m->height);
+	for (int i = 0; i < m->height; i++) {
+		for (int j = 0; j < m->width; j++) {
+			res->set_element(j,i, m->get_element(i, j));
+		}
+	}
+
+	return res;
+}
+

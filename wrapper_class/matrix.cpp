@@ -1,7 +1,17 @@
 #include <string>
-#include "matrix.h"
-#include "helper_functions.h"
+#include "../headers/matrix.h"
+#include "../headers/helper_functions.h"
 #include <iostream>
+
+Matrix::Matrix(int m, int n) {
+	if (m <= 0 || n <= 0) {
+		std::cout<< "matrix can not be of size smaller or equal to zero" << std::endl;
+		throw;
+	}
+	matrix = new double[m * n]{0};
+	width = n;
+	height = m;
+}
 
 double Matrix::get_element(int row_num, int col_num) {
 	 if (!check_valid(row_num, col_num, this->width, this->height)) {
@@ -22,7 +32,7 @@ void Matrix::set_element(int row_num, int col_num, double el) {
 void Matrix::scalar_multiply(double scalar) {
 	for (int i=0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
-			matrix[j + i * width] *= scalar;
+			this->set_element(i, j, this->get_element(i, j) * scalar);
 		}
 	}
 }
@@ -63,3 +73,4 @@ bool Matrix::equal(Matrix* b) {
 	}
 	return true;
 }
+
