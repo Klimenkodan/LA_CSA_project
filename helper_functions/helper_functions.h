@@ -4,7 +4,8 @@
 #endif //LA_CSA_PROJECT_HELPER_FUNCTIONS_H
 
 #include <string>
-#include "matrix.h"
+#include "../headers/matrix.h"
+#include <vector>
 
 template <typename CharT, typename Traits,
 		typename Allocator = std::allocator<CharT>>
@@ -15,3 +16,5 @@ std::string number_repr(double num);
 bool check_valid(int row_num, int col_num, int weight, int height);
 
 Matrix* read_matrix_conf(int m, int n, const char* file_name);
+
+std::vector<double>* divide_polynomials(std::vector<double>* to_div, const std::vector<double>& to_div_by);

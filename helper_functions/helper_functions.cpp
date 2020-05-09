@@ -1,4 +1,4 @@
-#include "../headers/helper_functions.h"
+#include "helper_functions.h"
 #include <string>
 #include <vector>
 #include <array>
@@ -93,3 +93,19 @@ bool check_valid(int row_num, int col_num, int width, int height) {
 	return ( 0 <= row_num && row_num < height && 0 <= col_num  && col_num < width);
 }
 
+std::vector<double>* divide_polynomials(std::vector<double>* to_div, const std::vector<double>& to_div_by) {
+	double coefficient;
+	auto* result = new std::vector<double>;
+	size_t pol2_pow = to_div_by.size() - 1;
+	while (to_div->size() != 1) {
+		coefficient = to_div->at(to_div->size() - 1) / to_div_by.at(pol2_pow);
+		to_div->pop_back();
+		result->insert(result->begin(), coefficient);
+
+		for (size_t i = 1; i < pol2_pow + 1; i++) {
+			to_div->at(to_div->size() - i) = to_div->at(to_div->size() - i) - coefficient * to_div_by.at(pol2_pow - i);
+		}
+	}
+
+	return result;
+}
