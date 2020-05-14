@@ -2,6 +2,7 @@
 #include <cmath>
 #include <map>
 #include <cassert>
+#include "../headers/matrix.h"
 #include "../headers/matrix_operations.h"
 #include "../headers/vector_operations.h"
 
@@ -22,24 +23,24 @@ Matrix* add_matrix(Matrix* a, Matrix* b, double a_coef, double b_coef) {
 
 
 Matrix* multiply_matrix(Matrix* a , Matrix* b) {
-	if (a->get_width() != b->get_height()) {
-		std::cout << "matrices can not be multiplied" << std::endl;
-		return nullptr;
-	}
+    if (a->get_width() != b->get_height()) {
+        std::cout << "matrices can not be multiplied" << std::endl;
+        return nullptr;
+    }
 
-	auto* c = new Matrix(a->get_height(), b->get_height());
-	double vector_mult = 0;
+    auto* c = new Matrix(a->get_height(), b->get_width());
+    double vector_mult = 0;
 
-	for (int i = 0; i < a->get_height(); i++) {
-		for (int j = 0; j < b->get_width(); j++) {
-			for (int k = 0; k < a->get_width(); k++) {
-				vector_mult += a->get_element(i, k) * b->get_element(k, j);
-			}
-			c->set_element(i, j, vector_mult);
-			vector_mult = 0;
-		}
-	}
-	return c;
+    for (int i = 0; i < a->get_height(); i++) {
+        for (int j = 0; j < b->get_width(); j++) {
+            for (int k = 0; k < a->get_width(); k++) {
+                vector_mult += a->get_element(i, k) * b->get_element(k, j);
+            }
+            c->set_element(i, j, vector_mult);
+            vector_mult = 0;
+        }
+    }
+    return c;
 }
 
 Matrix* identity(int num_rows) {
@@ -60,38 +61,6 @@ Matrix* scalar_multiply(Matrix* a, double mul) {
 	}
 	return b;
 }
-
-
-//Matrix* row_echelon(Matrix* a) {
-//	Matrix* b = a->copy();
-//	int cur_line = 0;
-//	double coeff;
-//	double interm;
-//	for (int j = 0; j < a->get_width(); j++) {
-//		for (int i = cur_line; i < a->get_height() - 1; i++) {
-//			if (b->get_element(i, j) != 0) {
-//				if (i != cur_line) {
-//					for (int k = 0; k < a->get_width(); k++) {
-//						interm = b->get_element(i, k);
-//						b->set_element(i, k, b->get_element(cur_line, k));
-//						b->set_element(cur_line, k, interm);
-//					}
-//				}
-//					for (int p = cur_line + 1; p < a->get_height(); p++) {
-//						coeff =  b->get_element(p, j) / b->get_element(cur_line, j);
-//						for (int q = j; q < a->get_width(); q++) {
-//							b->set_element(p, q, b->get_element(p, q) - (coeff * b->get_element(cur_line, q)));
-//						}
-//				}
-//
-//			cur_line ++;
-//			break;
-//			}
-//
-//		}
-//	}
-//	return b;
-//}
 
 Matrix* row_echelon(Matrix* matrix) {
 	using std::cout;
@@ -118,7 +87,7 @@ Matrix* row_echelon(Matrix* matrix) {
 				break;
 			}
 		}
-		}
+	}
 	return matrix;
 }
 
@@ -170,11 +139,7 @@ Matrix* inv(Matrix* matrix) {
 		}
 	}
 	return matrix;
-
-
 }
-
-
 
 
 Matrix* inverse(Matrix* a) { //todo: fix with changed row_echelon

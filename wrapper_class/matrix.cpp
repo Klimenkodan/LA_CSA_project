@@ -18,6 +18,7 @@ Matrix::Matrix(int m, int n, const std::vector<double>& values) {
 	matrix = new double[m * n];
 	width = n;
 	height = m;
+
 	for (int i = 0; i < m * n; ++i) {
 		matrix[i] = values[i];
 	}
@@ -50,6 +51,7 @@ Matrix* Matrix::copy_column(int col_num) {
 	return column;
 
 }
+
 std::string Matrix::representation() {
 	std::string repr;
 	for (int i=0; i < get_height(); i++) {
@@ -86,10 +88,10 @@ bool Matrix::equal(Matrix* b, double err) {
 }
 
 void Matrix::add_column(Matrix* column, int num_column) {
-	assert(num_column >= 0 || num_column < get_width() || is_vector(column) || get_height() == column->get_height());
-	for (int i = 0; i < get_height(); i++) {
-		set_element(i, num_column, column->get_element(num_column, 0));
-	}
+    assert(num_column >= 0 || num_column < get_width() || is_vector(column) || get_height() == column->get_height());
+    for (int i = 0; i < get_height(); i++) {
+        set_element(i, num_column, column->get_element(i, 0));
+    }
 
 }
 

@@ -12,7 +12,7 @@ Matrix* row_echelon(Matrix* matrix);
 
 Matrix* rref(Matrix* matrix);
 
-bool sizes_equal(const Matrix* a, const Matrix* b);
+bool sizes_equal( Matrix* a, Matrix* b );
 
 bool is_upper(Matrix* matrix);
 
