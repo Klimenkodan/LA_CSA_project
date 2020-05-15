@@ -79,7 +79,7 @@ bool Matrix::equal(Matrix* b, double err) {
 	assert(get_height() == b->get_height() && get_width() == b->get_width());
 	for (int i = 0; i < get_height(); i++) {
 		for (int j = 0; j < get_width(); j++) {
-			if (std::abs((get_element(i, j) - b->get_element(i, j) )/ get_element(i, j)) > err) {
+			if (std::abs((get_element(i, j) - b->get_element(i, j) )) > err) {
 				return false;
 			}
 		}

@@ -17,8 +17,8 @@ add_executable(LA_CSA_project
         src/vector_operations.cpp
         headers/vector_operations.h
         tests/test_matrix.cpp
-        tests/test_matrix.h
         tests/test_matrix_operations.cpp
-        tests/test_matrix_operations.h)
+        tests/test_vector_operations.cpp
+        )
 
 target_link_libraries(LA_CSA_project ${GTEST_LIBRARIES} pthread)

@@ -7,8 +7,6 @@
 #include "headers/matrix_operations.h"
 #include "helper_functions/helper_functions.h"
 #include "headers/vector_operations.h"
-#include "tests/test_matrix.h"
-#include "tests/test_matrix_operations.h"
 #include <gtest/gtest.h>
 
 
@@ -56,26 +54,35 @@ int main(int argc, char **argv) {
 //	std::cout << transpose(b)->representation();
 
 //  Google Tests starting
-
+//
 //    testing::InitGoogleTest(&argc, argv);
 //    return RUN_ALL_TESTS();
 
-//    Matrix m_1 = Matrix(3,4, {2,5,6,7,8,9,10,11,15,14,13,12});
-    auto m_1 = Matrix(3,4, {2,5,6,7,8,9,10,11,15,14,13,12});
-    m_1 = *row_echelon(&m_1);
-    std::cout << m_1.representation();
+    Matrix m_1 = Matrix(5, 5, {
+            1, 2, 3, 4, 5,
+            6, 7, 8, 9, 0,
+            5, 4, 3, 2, 1,
+            2, 2, 5, 6, 0,
+            1, 5, 8, 2, 9
+    });
 
-    for (int i = 0; i < m_1.get_height() - 1; i++){
-//        for (int j = i; j < m_1.get_height(); ++j) {
-            std::cout << i << "\n";
-//        }
-    }
+    auto res = QR_factorization(&m_1);
+    auto f = inverse(res["Q"]);
+//
+    std::cout << multiply_matrix(f, res["Q"])->representation()<< "\n";
+    std::cout << res["Q"]->representation() << "\n";
+    std::cout << inverse(res["Q"])->representation() << "\n";
+//    std::cout << res["R"]->representation();
+//    Matrix m_1 = Matrix( 3,3, {1,2,3,4,5,6,7,8,9} );
+//    auto res = QR_factorization(&m_1);
+//    auto Q = res["Q"];
+//
+//    auto Q_in = inverse(Q);
+//    bool r = identity(3)->equal(multiply_matrix(Q,Q_in), 0.1);
+//    bool r_1 = is_upper(res["R"]);
+//    std::cout << r << "\n";
+//    std::cout << r_1 << "\n";
 
-//    Matrix m_2 = Matrix(2,5, {1,2,3,4,5,6,7,8,9,10});
-//
-//    auto m_3 = multiply_matrix(&m_1, &m_2);
-//
-//    bool a = row_echelon( &m_1 )->get_element(2,2) == -2.09091;
-//    std::cout << row_echelon(&m_1)->representation() << "\n";
-//    return 0;
+
+    return 0;
 }

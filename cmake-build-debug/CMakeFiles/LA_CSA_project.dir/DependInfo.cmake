@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/vlad/Desktop/2_year/ACS/LA_CSA_project/src/vector_operations.cpp" "/home/vlad/Desktop/2_year/ACS/LA_CSA_project/cmake-build-debug/CMakeFiles/LA_CSA_project.dir/src/vector_operations.cpp.o"
   "/home/vlad/Desktop/2_year/ACS/LA_CSA_project/tests/test_matrix.cpp" "/home/vlad/Desktop/2_year/ACS/LA_CSA_project/cmake-build-debug/CMakeFiles/LA_CSA_project.dir/tests/test_matrix.cpp.o"
   "/home/vlad/Desktop/2_year/ACS/LA_CSA_project/tests/test_matrix_operations.cpp" "/home/vlad/Desktop/2_year/ACS/LA_CSA_project/cmake-build-debug/CMakeFiles/LA_CSA_project.dir/tests/test_matrix_operations.cpp.o"
+  "/home/vlad/Desktop/2_year/ACS/LA_CSA_project/tests/test_vector_operations.cpp" "/home/vlad/Desktop/2_year/ACS/LA_CSA_project/cmake-build-debug/CMakeFiles/LA_CSA_project.dir/tests/test_vector_operations.cpp.o"
   "/home/vlad/Desktop/2_year/ACS/LA_CSA_project/wrapper_class/matrix.cpp" "/home/vlad/Desktop/2_year/ACS/LA_CSA_project/cmake-build-debug/CMakeFiles/LA_CSA_project.dir/wrapper_class/matrix.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

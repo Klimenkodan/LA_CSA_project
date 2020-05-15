@@ -285,6 +285,33 @@ tests/test_matrix_operations.cpp.s:
 	$(MAKE) -f CMakeFiles/LA_CSA_project.dir/build.make CMakeFiles/LA_CSA_project.dir/tests/test_matrix_operations.cpp.s
 .PHONY : tests/test_matrix_operations.cpp.s
 
+tests/test_vector_operations.o: tests/test_vector_operations.cpp.o
+
+.PHONY : tests/test_vector_operations.o
+
+# target to build an object file
+tests/test_vector_operations.cpp.o:
+	$(MAKE) -f CMakeFiles/LA_CSA_project.dir/build.make CMakeFiles/LA_CSA_project.dir/tests/test_vector_operations.cpp.o
+.PHONY : tests/test_vector_operations.cpp.o
+
+tests/test_vector_operations.i: tests/test_vector_operations.cpp.i
+
+.PHONY : tests/test_vector_operations.i
+
+# target to preprocess a source file
+tests/test_vector_operations.cpp.i:
+	$(MAKE) -f CMakeFiles/LA_CSA_project.dir/build.make CMakeFiles/LA_CSA_project.dir/tests/test_vector_operations.cpp.i
+.PHONY : tests/test_vector_operations.cpp.i
+
+tests/test_vector_operations.s: tests/test_vector_operations.cpp.s
+
+.PHONY : tests/test_vector_operations.s
+
+# target to generate assembly for a file
+tests/test_vector_operations.cpp.s:
+	$(MAKE) -f CMakeFiles/LA_CSA_project.dir/build.make CMakeFiles/LA_CSA_project.dir/tests/test_vector_operations.cpp.s
+.PHONY : tests/test_vector_operations.cpp.s
+
 wrapper_class/matrix.o: wrapper_class/matrix.cpp.o
 
 .PHONY : wrapper_class/matrix.o
@@ -339,6 +366,9 @@ help:
 	@echo "... tests/test_matrix_operations.o"
 	@echo "... tests/test_matrix_operations.i"
 	@echo "... tests/test_matrix_operations.s"
+	@echo "... tests/test_vector_operations.o"
+	@echo "... tests/test_vector_operations.i"
+	@echo "... tests/test_vector_operations.s"
 	@echo "... wrapper_class/matrix.o"
 	@echo "... wrapper_class/matrix.i"
 	@echo "... wrapper_class/matrix.s"

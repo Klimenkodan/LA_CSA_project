@@ -57,14 +57,6 @@ helper_functions/helper_functions.h
 /home/vlad/Desktop/2_year/ACS/LA_CSA_project/helper_functions/helper_functions.h
 headers/vector_operations.h
 /home/vlad/Desktop/2_year/ACS/LA_CSA_project/headers/vector_operations.h
-tests/test_matrix.h
-/home/vlad/Desktop/2_year/ACS/LA_CSA_project/tests/test_matrix.h
-tests/test_matrix_operations.h
-/home/vlad/Desktop/2_year/ACS/LA_CSA_project/tests/test_matrix_operations.h
 gtest/gtest.h
 -
-
-/home/vlad/Desktop/2_year/ACS/LA_CSA_project/tests/test_matrix.h
-
-/home/vlad/Desktop/2_year/ACS/LA_CSA_project/tests/test_matrix_operations.h
 

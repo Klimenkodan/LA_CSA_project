@@ -111,13 +111,10 @@
 		<Unit filename="/home/vlad/Desktop/2_year/ACS/LA_CSA_project/tests/test_matrix.cpp">
 			<Option target="LA_CSA_project"/>
 		</Unit>
-		<Unit filename="/home/vlad/Desktop/2_year/ACS/LA_CSA_project/tests/test_matrix.h">
-			<Option target="LA_CSA_project"/>
-		</Unit>
 		<Unit filename="/home/vlad/Desktop/2_year/ACS/LA_CSA_project/tests/test_matrix_operations.cpp">
 			<Option target="LA_CSA_project"/>
 		</Unit>
-		<Unit filename="/home/vlad/Desktop/2_year/ACS/LA_CSA_project/tests/test_matrix_operations.h">
+		<Unit filename="/home/vlad/Desktop/2_year/ACS/LA_CSA_project/tests/test_vector_operations.cpp">
 			<Option target="LA_CSA_project"/>
 		</Unit>
 		<Unit filename="/home/vlad/Desktop/2_year/ACS/LA_CSA_project/wrapper_class/matrix.cpp">

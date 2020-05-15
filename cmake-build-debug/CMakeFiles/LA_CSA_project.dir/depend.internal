@@ -11,8 +11,6 @@ CMakeFiles/LA_CSA_project.dir/main.cpp.o
  /home/vlad/Desktop/2_year/ACS/LA_CSA_project/headers/vector_operations.h
  /home/vlad/Desktop/2_year/ACS/LA_CSA_project/helper_functions/helper_functions.h
  /home/vlad/Desktop/2_year/ACS/LA_CSA_project/main.cpp
- /home/vlad/Desktop/2_year/ACS/LA_CSA_project/tests/test_matrix.h
- /home/vlad/Desktop/2_year/ACS/LA_CSA_project/tests/test_matrix_operations.h
 CMakeFiles/LA_CSA_project.dir/src/matrix_operations.cpp.o
  /home/vlad/Desktop/2_year/ACS/LA_CSA_project/headers/matrix.h
  /home/vlad/Desktop/2_year/ACS/LA_CSA_project/headers/matrix_operations.h
@@ -20,7 +18,6 @@ CMakeFiles/LA_CSA_project.dir/src/matrix_operations.cpp.o
  /home/vlad/Desktop/2_year/ACS/LA_CSA_project/src/matrix_operations.cpp
 CMakeFiles/LA_CSA_project.dir/src/vector_operations.cpp.o
  /home/vlad/Desktop/2_year/ACS/LA_CSA_project/headers/matrix.h
- /home/vlad/Desktop/2_year/ACS/LA_CSA_project/headers/matrix_operations.h
  /home/vlad/Desktop/2_year/ACS/LA_CSA_project/headers/vector_operations.h
  /home/vlad/Desktop/2_year/ACS/LA_CSA_project/src/vector_operations.cpp
 CMakeFiles/LA_CSA_project.dir/tests/test_matrix.cpp.o
@@ -30,9 +27,9 @@ CMakeFiles/LA_CSA_project.dir/tests/test_matrix_operations.cpp.o
  /home/vlad/Desktop/2_year/ACS/LA_CSA_project/headers/matrix_operations.h
  /home/vlad/Desktop/2_year/ACS/LA_CSA_project/headers/vector_operations.h
  /home/vlad/Desktop/2_year/ACS/LA_CSA_project/helper_functions/helper_functions.h
- /home/vlad/Desktop/2_year/ACS/LA_CSA_project/tests/test_matrix.h
  /home/vlad/Desktop/2_year/ACS/LA_CSA_project/tests/test_matrix_operations.cpp
- /home/vlad/Desktop/2_year/ACS/LA_CSA_project/tests/test_matrix_operations.h
+CMakeFiles/LA_CSA_project.dir/tests/test_vector_operations.cpp.o
+ /home/vlad/Desktop/2_year/ACS/LA_CSA_project/tests/test_vector_operations.cpp
 CMakeFiles/LA_CSA_project.dir/wrapper_class/matrix.cpp.o
  /home/vlad/Desktop/2_year/ACS/LA_CSA_project/headers/matrix.h
  /home/vlad/Desktop/2_year/ACS/LA_CSA_project/headers/vector_operations.h
