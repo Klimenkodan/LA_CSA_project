@@ -28,6 +28,8 @@ CMakeFiles/LA_CSA_project.dir/tests/test_matrix_operations.cpp.o: ../headers/vec
 CMakeFiles/LA_CSA_project.dir/tests/test_matrix_operations.cpp.o: ../helper_functions/helper_functions.h
 CMakeFiles/LA_CSA_project.dir/tests/test_matrix_operations.cpp.o: ../tests/test_matrix_operations.cpp
 
+CMakeFiles/LA_CSA_project.dir/tests/test_vector_operations.cpp.o: ../headers/matrix.h
+CMakeFiles/LA_CSA_project.dir/tests/test_vector_operations.cpp.o: ../headers/vector_operations.h
 CMakeFiles/LA_CSA_project.dir/tests/test_vector_operations.cpp.o: ../tests/test_vector_operations.cpp
 
 CMakeFiles/LA_CSA_project.dir/wrapper_class/matrix.cpp.o: ../headers/matrix.h

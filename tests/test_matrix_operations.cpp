@@ -164,28 +164,28 @@
 //    }
 //}
 //
-TEST(inverse_test, unexpected_args){
-    Matrix m_1 = Matrix( 4,4, {5,6,7,1,3,7,10,11,16,17,21,23,29,8,3,0} );
-    auto m_2 = inverse(&m_1);
-
-    ASSERT_TRUE( identity(4)->equal( multiply_matrix(&m_1, m_2), 1 ) );
-    ASSERT_EQ(inverse( new Matrix(5,5) ), nullptr );
-
-    m_1 = Matrix( 3,3, {-5,0,-1,1,2,-1,-3,4,1} );
-    m_2 = inverse(&m_1);
-
-    ASSERT_TRUE( identity(3)->equal( multiply_matrix(&m_1, m_2), 1 ) );
-
-    m_1 = Matrix( 3,3, {0,0,3,0,5,0,0,0,4} );
-    ASSERT_EQ(inverse(&m_1), nullptr);
-
-    m_1 = Matrix(3,2, {1,2,3,4,5,6});
-    ASSERT_DEATH(inverse(&m_1), "");
-
-    m_1 = Matrix(2,2, {1,2,3,4});
-    m_2 = inverse(&m_1);
-    ASSERT_TRUE( identity(2)->equal( multiply_matrix(&m_1, m_2), 1 ) );
-}
+//TEST(inverse_test, unexpected_args){
+//    Matrix m_1 = Matrix( 4,4, {5,6,7,1,3,7,10,11,16,17,21,23,29,8,3,0} );
+//    auto m_2 = inverse(&m_1);
+//
+//    ASSERT_TRUE( identity(4)->equal( multiply_matrix(&m_1, m_2), 1 ) );
+//    ASSERT_EQ(inverse( new Matrix(5,5) ), nullptr );
+//
+//    m_1 = Matrix( 3,3, {-5,0,-1,1,2,-1,-3,4,1} );
+//    m_2 = inverse(&m_1);
+//
+//    ASSERT_TRUE( identity(3)->equal( multiply_matrix(&m_1, m_2), 1 ) );
+//
+//    m_1 = Matrix( 3,3, {0,0,3,0,5,0,0,0,4} );
+//    ASSERT_EQ(inverse(&m_1), nullptr);
+//
+//    m_1 = Matrix(3,2, {1,2,3,4,5,6});
+//    ASSERT_DEATH(inverse(&m_1), "");
+//
+//    m_1 = Matrix(2,2, {1,2,3,4});
+//    m_2 = inverse(&m_1);
+//    ASSERT_TRUE( identity(2)->equal( multiply_matrix(&m_1, m_2), 1 ) );
+//}
 //
 //TEST(rank_test, unexpected_args){
 //    Matrix m_1 = Matrix(3,2, {1,2,3,4,5,6});;

@@ -29,6 +29,8 @@ CMakeFiles/LA_CSA_project.dir/tests/test_matrix_operations.cpp.o
  /home/vlad/Desktop/2_year/ACS/LA_CSA_project/helper_functions/helper_functions.h
  /home/vlad/Desktop/2_year/ACS/LA_CSA_project/tests/test_matrix_operations.cpp
 CMakeFiles/LA_CSA_project.dir/tests/test_vector_operations.cpp.o
+ /home/vlad/Desktop/2_year/ACS/LA_CSA_project/headers/matrix.h
+ /home/vlad/Desktop/2_year/ACS/LA_CSA_project/headers/vector_operations.h
  /home/vlad/Desktop/2_year/ACS/LA_CSA_project/tests/test_vector_operations.cpp
 CMakeFiles/LA_CSA_project.dir/wrapper_class/matrix.cpp.o
  /home/vlad/Desktop/2_year/ACS/LA_CSA_project/headers/matrix.h

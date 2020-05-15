@@ -12,12 +12,12 @@ double dot_product(Matrix*a , Matrix* b);
 
 bool is_vector( Matrix* a);
 
-bool orthogonalM(Matrix*a , Matrix* b);
+double orthogonalM(Matrix*a , Matrix* b);
 
-bool orthogonal(std::vector<double>* a, std::vector<double>* b);
+double orthogonal(std::vector<double>* a, std::vector<double>* b);
 
-bool collinear_m(Matrix*a , Matrix* b);
+double collinear_m(Matrix*a , Matrix* b);
 
-bool collinear_v(std::vector<double>* a, std::vector<double>* b);
+double collinear_v(std::vector<double>* a, std::vector<double>* b);
 
 double norm (Matrix* matrix);

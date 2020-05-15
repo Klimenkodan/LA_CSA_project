@@ -54,35 +54,21 @@ int main(int argc, char **argv) {
 //	std::cout << transpose(b)->representation();
 
 //  Google Tests starting
-//
-//    testing::InitGoogleTest(&argc, argv);
-//    return RUN_ALL_TESTS();
 
-    Matrix m_1 = Matrix(5, 5, {
-            1, 2, 3, 4, 5,
-            6, 7, 8, 9, 0,
-            5, 4, 3, 2, 1,
-            2, 2, 5, 6, 0,
-            1, 5, 8, 2, 9
-    });
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 
-    auto res = QR_factorization(&m_1);
-    auto f = inverse(res["Q"]);
-//
-    std::cout << multiply_matrix(f, res["Q"])->representation()<< "\n";
-    std::cout << res["Q"]->representation() << "\n";
-    std::cout << inverse(res["Q"])->representation() << "\n";
-//    std::cout << res["R"]->representation();
-//    Matrix m_1 = Matrix( 3,3, {1,2,3,4,5,6,7,8,9} );
-//    auto res = QR_factorization(&m_1);
-//    auto Q = res["Q"];
-//
-//    auto Q_in = inverse(Q);
-//    bool r = identity(3)->equal(multiply_matrix(Q,Q_in), 0.1);
-//    bool r_1 = is_upper(res["R"]);
-//    std::cout << r << "\n";
-//    std::cout << r_1 << "\n";
+//    std::vector<double> v_1 = {};
+//    std::vector<double> v_2 = {};
 
+//    std::cout << collinear_v(&v_1, &v_2) << "\n";
+
+//    std::cout << dot_product(new Matrix(2,1), new Matrix(2,1)) << "\n";
+//    std::cout << dot_product(new Matrix(2,1), new Matrix(2,2)) << "\n";
+//    std::cout << dot_product(new Matrix(2,1), new Matrix(1,2)) << "\n";
+
+//    std::cout << dot_product(new Matrix(5,1, {6,7,8,9,0}), new Matrix(1,5, {5,4,3,2,1})) << "\n";
+//    std::cout << dot_product(new Matrix(1,10, {1,2,3,4,5,6,7,8,9,0}), new Matrix(1,10, {0,9,8,7,6,5,4,3,2,1})) << "\n";
 
     return 0;
 }

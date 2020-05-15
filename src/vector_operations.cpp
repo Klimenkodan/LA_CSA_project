@@ -9,15 +9,16 @@ bool is_vector( Matrix* a) {
 }
 
 double dot_productV(std::vector<double>* a, std::vector<double>* b) {
-    if (a->size() != b->size()) {
+    if (a->size() != b->size() ) {
         std::cout << "vectors sizes aren't equal" << std::endl;
+        return -1;
+    }else if ( a->size() == 0 ){
         return -1;
     }
     double vector_mult = 0;
     for (size_t i = 0; i < a->size(); i++) {
         vector_mult += a->at(i) * b->at(i);
     }
-
     return vector_mult;
 }
 
@@ -59,12 +60,12 @@ double dot_product(Matrix* a, Matrix* b) {
     return vector_mult;
 }
 
-bool orthogonal(Matrix*a , Matrix* b) {
-    return dot_product(a, b) == 0;
+double orthogonal(Matrix*a , Matrix* b) {
+    return dot_product(a, b) == -1 ? -1 : dot_product(a,b) == 0;
 }
 
-bool orthogonal(std::vector<double>* a,  std::vector<double>* b) {
-    return dot_productV(a, b) == 0;
+double orthogonal(std::vector<double>* a,  std::vector<double>* b) {
+    return dot_productV(a, b) == -1 ? -1: dot_productV(a, b) == 0;
 }
 
 double norm (Matrix* matrix) {
@@ -74,7 +75,7 @@ double norm (Matrix* matrix) {
     return sqrt(dot_product(matrix, matrix));
 }
 
-bool collinear_m(Matrix*a , Matrix* b) {
+double collinear_m(Matrix*a , Matrix* b) {
     if (a->get_width() != b->get_width() || a->get_height() != b->get_height() || !is_vector(a) || !is_vector(b)) {
         std::cout << "vectors sizes aren't equal" << std::endl;
         return -1;
@@ -98,11 +99,13 @@ bool collinear_m(Matrix*a , Matrix* b) {
     return true;
 }
 
-bool collinear_v(std::vector<double>* a,  std::vector<double>* b) {
+double collinear_v(std::vector<double>* a,  std::vector<double>* b) {
 
     if (a->size() != b->size()) {
         std::cout << "Vector sizes are not equal.\n";
         return false;
+    } else if (a->size() == 0 || b->size() == 0){
+        return -1;
     }
 
     double coeff = a->at(0) / b->at(0);

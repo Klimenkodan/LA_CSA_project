@@ -60,3 +60,17 @@ headers/vector_operations.h
 gtest/gtest.h
 -
 
+/home/vlad/Desktop/2_year/ACS/LA_CSA_project/tests/test_vector_operations.cpp
+functional
+-
+../headers/matrix.h
+/home/vlad/Desktop/2_year/ACS/LA_CSA_project/headers/matrix.h
+../headers/vector_operations.h
+/home/vlad/Desktop/2_year/ACS/LA_CSA_project/headers/vector_operations.h
+gtest/gtest.h
+-
+vector
+-
+math.h
+-
+
