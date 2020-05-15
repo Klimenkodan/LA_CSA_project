@@ -144,3 +144,39 @@ TEST(collinear_v, unexpected_args){
     ASSERT_EQ(collinear_v(&v_1, &v_2), -1);
     ASSERT_EQ(collinear_v(&v_1, &v_2), collinear_v(&v_2, &v_1));
 }
+
+TEST(orthogonal_test_m, unexpected_args){
+    std::vector<double> v_1 = {};
+    std::vector<double> v_2 = {};
+
+    ASSERT_EQ(orthogonal( &v_1, &v_2), -1);
+    ASSERT_EQ(orthogonal( &v_1, &v_2), orthogonal( &v_2, &v_1));
+
+    v_1 = {1,2};
+    v_2 = {2,-1};
+
+    ASSERT_EQ(orthogonal( &v_1, &v_2), 1);
+    ASSERT_EQ(orthogonal( &v_1, &v_2), orthogonal( &v_2, &v_1));
+
+    v_1 = {1,2,8,9};
+    v_2 = {4,3,2,1};
+
+    ASSERT_EQ(orthogonal( &v_1, &v_2), 0);
+    ASSERT_EQ(orthogonal( &v_1, &v_2), orthogonal( &v_2, &v_1));
+}
+
+TEST(orthogonal_m_test, unexpected_args){
+    Matrix m_1 = Matrix(2,1);
+    Matrix m_2 = Matrix(1,2);
+
+    ASSERT_EQ(collinear_m(&m_1, &m_2), -1);
+
+    m_2 = Matrix(2,1);
+    ASSERT_FALSE(collinear_m(&m_1, &m_2));
+
+    m_1 = Matrix(3,1, {1,2,3});
+    m_2 = Matrix(3,1, {10,20,30});
+
+    ASSERT_TRUE(collinear_m( &m_1, &m_2 ));
+    ASSERT_TRUE(collinear_m( &m_2, &m_1 ));
+}
