@@ -109,49 +109,34 @@ Matrix* rref(Matrix* matrix) {
 
 Matrix* inverse(Matrix* matrix1) {
     assert(matrix1->get_width() == matrix1->get_height());
+    assert(determinant(matrix1) != 0);
     Matrix* matrix = matrix1->copy();
     Matrix* ident = identity(matrix->get_width());
 
     int cur_line = 0;
-    double coef;
+    double coef, coef_2;
 
-    for (int i = 0; i < matrix->get_width(); i++) {
-        for (int j = cur_line; j < matrix->get_height(); j++) {
-            if (matrix->get_element(j, i) != 0) {
-                if (i != j) {
-                    std::cout << "swap  " << j << cur_line << std::endl;
-                    ident->interchange_rows(j, cur_line);
-                    matrix->interchange_rows(j, cur_line);
-                }
-                coef = 1/matrix->get_element(cur_line, i);
-                matrix->multiply_row(cur_line, coef);
-                ident->multiply_row(cur_line, coef);
 
-                for (int k = 0; k < cur_line; k++) {
-                    coef = -1 * (matrix->get_element(k, i) / matrix->get_element(cur_line, i));
-                    if (coef != 0) {
-                        matrix->add_to_row(k, cur_line, coef);
-                        ident->add_to_row(k, cur_line, coef);
-                    }
-                }
+    for(int i = 0; i <  matrix->get_width() ; i++){
+        coef = matrix->get_element(i, i);
 
-                for (int k = cur_line + 1; k < matrix->get_height(); k++) {
-                    coef = -1 * (matrix->get_element(k, i) / matrix->get_element(cur_line, i));
-                    if (coef != 0) {
-                        matrix->add_to_row(k, cur_line, coef);
-                        ident->add_to_row(k, cur_line, coef);
-                    }
-                }
-                cur_line++;
-                break;
-            }
+        for (int j = 0; j < matrix->get_width(); j++){
+            matrix->set_element(i, j, matrix->get_element(i,j) / coef );
+            ident->set_element(i, j, ident->get_element(i,j) / coef );
         }
+
+        std::cout << ident->representation() << "\n";
+
+        for (int j = 0; j < matrix->get_width(); j++){
+            coef_2 = j == i ? 0: matrix->get_element(j, i);
+            matrix->add_to_row(j, i, -coef_2);
+            ident->add_to_row(j, i, -coef_2);
+        }
+
     }
-////  return matrix;
-    if (!matrix->equal(identity(matrix->get_height()), 0.00005)) {
-        std::cout << "the matrix is not invertible" << std::endl;
-        return nullptr;
-    }
+
+    std::cout << ident->representation() << "\n";
+
     return ident;
 
 }
@@ -207,10 +192,11 @@ double determinant(Matrix* matrix){
 		std::cout << "Non-square matrices have no determinants ";
 		return -1;
 	}
-	matrix = row_echelon(matrix);
+	auto matrix_n = matrix->copy();
+	matrix_n = row_echelon(matrix_n);
 	double det = 1;
-	for (int i = 0; i < matrix->get_height(); i++){
-		det *= matrix->get_element(i, i);
+	for (int i = 0; i < matrix_n->get_height(); i++){
+		det *= matrix_n->get_element(i, i);
 	}
 	det = round(det * pow(10,5) ) / pow(10,5);
 	return det;
@@ -228,7 +214,6 @@ double trace(Matrix* matrix) {
 
 	return trace;
 }
-
 
 double gram_coef(Matrix* a, Matrix* b) {
 	return dot_product(a, b) / dot_product(b, b);
