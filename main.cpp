@@ -13,30 +13,17 @@
 int main(int argc, char **argv) {
 //  Google Tests starting
 
-//    testing::InitGoogleTest(&argc, argv);
-//    return RUN_ALL_TESTS();
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 
-    Matrix m_1 = Matrix(5, 5, {
-            1, 2, 3, 4, 5,
-            6, 7, 8, 9, 0,
-            5, 4, 3, 2, 1,
-            2, 2, 5, 6, 0,
-            1, 5, 8, 2, 9
-    });
+//    Matrix m_1 = Matrix(3,3, {1,2,3,6,5,4,9,5,7});
+//    Matrix vector = Matrix(3,1, {1,2,3});
+//
+//    auto m_2 = change_of_basis(&m_1, &vector);
 
-    auto res = QR_factorization(&m_1);
-
-    auto Q = res["Q"];
-    auto Q_in = inverse(Q);
-
-    auto Q_trasp = transpose(Q);
-    auto R = res["R"];
-
-//    std::cout << multiply_matrix(Q,Q_in)->representation() << "\n";
 //    std::cout << determinant(&m_1) << "\n";
+//    std::cout << m_1.representation() << "\n";
+//    std::cout << determinant(&old);
 
-//    std::cout << Q->representation() << "\n";
-//    std::cout << inverse(Q)->representation() << "\n";
-
-//    inverse(Q);
+//    std::cout << m_2->representation() << "\n";
 }

@@ -41,3 +41,11 @@ double determinant(Matrix* matrix);
 double trace(Matrix* matrix);
 
 Matrix* eigen_vectors(Matrix* matrix, const std::vector<double>& eigenvalues);
+
+bool is_Hessenberg(Matrix* matrix);
+
+Matrix* solve_homogoeneous_equation(Matrix *m);
+
+Matrix* generate_transition_matrix(Matrix* m_1, Matrix* m_2);
+
+Matrix* change_of_basis(Matrix* transition_matrix, Matrix* vector);

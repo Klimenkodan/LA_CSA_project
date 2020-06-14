@@ -180,3 +180,19 @@ TEST(orthogonal_m_test, unexpected_args){
     ASSERT_TRUE(collinear_m( &m_1, &m_2 ));
     ASSERT_TRUE(collinear_m( &m_2, &m_1 ));
 }
+
+TEST(is_zero_vector_test, general_test){
+    Matrix v = Matrix(1,5);
+    ASSERT_TRUE( is_zero_vector(&v) );
+
+    v = Matrix(5,1);
+    ASSERT_TRUE( is_zero_vector(&v) );
+
+
+    v = Matrix(5,1, {0, 0, 1, 0, 0});
+    ASSERT_FALSE( is_zero_vector(&v) );
+
+
+    v = Matrix(1,5, {0, 0, 1, 0, 1});
+    ASSERT_FALSE( is_zero_vector(&v) );
+}

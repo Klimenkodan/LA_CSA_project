@@ -2,6 +2,7 @@
 #include "../headers/vector_operations.h"
 #include <map>
 #include <cmath>
+#include <cassert>
 #include "../headers/matrix.h"
 
 bool is_vector( Matrix* a) {
@@ -115,4 +116,21 @@ double collinear_v(std::vector<double>* a,  std::vector<double>* b) {
         }
     }
     return true;
+}
+
+bool is_zero_vector( Matrix* v ){
+    assert( is_vector(v) );
+    bool is_zero = 1;
+
+    if ( v->get_height() > v->get_width() ){
+        for (int i = 0; i < v->get_height(); i++){
+            is_zero &= v->get_element(i, 0) == 0;
+        }
+    } else if (v->get_width() >= v->get_height()){
+        for (int i = 0; i < v->get_width(); i++){
+            is_zero &= v->get_element(0, i) == 0;
+        }
+    }
+
+    return is_zero;
 }

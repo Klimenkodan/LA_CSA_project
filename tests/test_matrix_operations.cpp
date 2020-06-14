@@ -281,239 +281,329 @@ TEST(QR_factorization_test, unexpected_args){
     res = QR_factorization(&m_1);
 
     Q = res["Q"];
+    R = res["R"];
+
+    ASSERT_TRUE(multiply_matrix(Q, R)->equal(&m_1, 0.1));
+    ASSERT_TRUE(is_upper(R));
+
+    m_1 = Matrix(4, 5, {
+            1, 2, 3, 4, 5,
+            6, 7, 8, 9, 0,
+            5, 4, 3, 2, 1,
+            2, 2, 5, 6, 0
+    });
+
+    res = QR_factorization(&m_1);
+
+    Q = res["Q"];
+    R = res["R"];
+
+    ASSERT_TRUE(multiply_matrix(Q, R)->equal(&m_1, 3));
+
+   m_1 =  Matrix(3, 3, {
+            1, 2, 3,
+            6, 7, 8,
+            5, 4, 3
+    });
+
+    res = QR_factorization(&m_1);
+
+    Q = res["Q"];
     Q_in = inverse(Q);
 
     Q_trasp = transpose(Q);
     R = res["R"];
 
-//    ASSERT_TRUE( identity(5)->equal(multiply_matrix(Q,Q_in), 0.1) );
-//    ASSERT_TRUE( identity(5)->equal(multiply_matrix(Q_in,Q), 0.1) );
-//    ASSERT_TRUE(is_upper(R));
+    ASSERT_TRUE( identity(3)->equal(multiply_matrix(Q,Q_in), 0.1) );
+    ASSERT_TRUE( identity(3)->equal(multiply_matrix(Q_in,Q), 0.1) );
+    ASSERT_TRUE(is_upper(R));
 
-//   m_1 =  Matrix(3, 3, {
-//            1, 2, 3,
-//            6, 7, 8,
-//            5, 4, 3
-//    });
-//
-//    res = QR_factorization(&m_1);
-//
-//    Q = res["Q"];
-//    Q_in = inverse(Q);
-//
-//    Q_trasp = transpose(Q);
-//    R = res["R"];
-//
-//    ASSERT_TRUE( identity(3)->equal(multiply_matrix(Q,Q_in), 0.1) );
-//    ASSERT_TRUE( identity(3)->equal(multiply_matrix(Q_in,Q), 0.1) );
-//    ASSERT_TRUE(is_upper(R));
-//
-//    m_1 = Matrix(3, 3, {
-//            1, 2, 5,
-//            9, 4, 0,
-//            0, 2, 0
-//    });
-//
-//    res = QR_factorization(&m_1);
-//
-//    Q = res["Q"];
-//    Q_in = inverse(Q);
-//
-//    Q_trasp = transpose(Q);
-//    R = res["R"];
-//
-//    ASSERT_TRUE( identity(3)->equal(multiply_matrix(Q,Q_in), 0.1) );
-//    ASSERT_TRUE( identity(3)->equal(multiply_matrix(Q_in,Q), 0.1) );
-//    ASSERT_TRUE(is_upper(R));
-//
-//    m_1 = Matrix(3, 3, {
-//            0, 2, 1,
-//            9, 4, 0,
-//            1, 2, 0
-//    });
-//
-//    res = QR_factorization(&m_1);
-//
-//    Q = res["Q"];
-//    Q_in = inverse(Q);
-//
-//    Q_trasp = transpose(Q);
-//    R = res["R"];
-//
-//    ASSERT_TRUE( identity(3)->equal(multiply_matrix(Q,Q_in), 0.1) );
-//    ASSERT_TRUE( identity(3)->equal(multiply_matrix(Q_in,Q), 0.1) );
-//    ASSERT_TRUE(is_upper(R));
+    m_1 = Matrix(3, 3, {
+            1, 2, 5,
+            9, 4, 0,
+            0, 2, 0
+    });
+
+    res = QR_factorization(&m_1);
+
+    Q = res["Q"];
+    Q_in = inverse(Q);
+
+    Q_trasp = transpose(Q);
+    R = res["R"];
+
+    ASSERT_TRUE( identity(3)->equal(multiply_matrix(Q,Q_in), 0.1) );
+    ASSERT_TRUE( identity(3)->equal(multiply_matrix(Q_in,Q), 0.1) );
+    ASSERT_TRUE(is_upper(R));
+
+    m_1 = Matrix(3, 3, {
+            0, 2, 1,
+            9, 4, 0,
+            1, 2, 0
+    });
+
+    res = QR_factorization(&m_1);
+
+    Q = res["Q"];
+    Q_in = inverse(Q);
+
+    Q_trasp = transpose(Q);
+    R = res["R"];
+
+    ASSERT_TRUE( identity(3)->equal(multiply_matrix(Q,Q_in), 0.1) );
+    ASSERT_TRUE( identity(3)->equal(multiply_matrix(Q_in,Q), 0.1) );
+    ASSERT_TRUE(is_upper(R));
 }
 
-//TEST(isUpper_test, validMatrix){
-//    Matrix m_1 = Matrix(3,3, {4, 3, 2,
-//                              0, 4,-1,
-//                              0, 0, 4});
-//
-//    Matrix m_2 = Matrix(2, 2, {4, 3,
-//                               0, 4});
-//
-//    Matrix m_4 = Matrix(2, 2, {0, 0,
-//                               0, 0});
-//
-//    Matrix m_3 = Matrix(4,4, {4, 3, 2, 6,
-//                              0, 4,-1, 8,
-//                              0, 0,-1, 8,
-//                              0, 0, 0, 4});
-//
-//    ASSERT_TRUE(is_upper(&m_1));
-//    ASSERT_TRUE(is_upper(&m_2));
-//    ASSERT_TRUE(is_upper(&m_3));
-//    ASSERT_TRUE(is_upper(&m_4));
-//}
-//
-//TEST(isUpper_test, invalidMatrix){
-//    Matrix m_1 = Matrix(3,3, {4, 3, 2,
-//                              0, 4,-1,
-//                              0, 1, 4});
-//
-//    Matrix m_2 = Matrix(2, 2, {4, 3,
-//                               1, 4});
-//
-//    Matrix m_3 = Matrix(4,4, {4, 3, 2, 6,
-//                              1, 4,-1, 8,
-//                              0, 0,-1, 8,
-//                              0, 0, 0, 4});
-//
-//    Matrix m_4 = Matrix(3,2, {4, 3, 2,
-//                              0, 4,-1});
-//
-//    Matrix m_5 = Matrix(1,6, {4, 3, 2,
-//                              0, 4,-1});
-//
-//    ASSERT_FALSE(is_upper(&m_1));
-//    ASSERT_FALSE(is_upper(&m_2));
-//    ASSERT_FALSE(is_upper(&m_3));
-//    ASSERT_FALSE(is_upper(&m_4));
-//    ASSERT_FALSE(is_upper(&m_5));
-//}
-//
-//TEST(traceTest, validCases){
-//    Matrix m_1 = Matrix(3,3, {4, 3, 2,
-//                              0, 4,-1,
-//                              5, 0, 4});
-//
-//    Matrix m_2 = Matrix(2, 2, {4, 3,
-//                               0, 4});
-//
-//    Matrix m_3 = Matrix(4,4, {0, 3, 2, 6,
-//                              0, 0,-1, 8,
-//                              0, 0, 0, 8,
-//                              0, 4, 0, 0});
-//
-//    Matrix m_4 = Matrix(2, 2, {0, 0,
-//                               0, 0});
-//
-//    Matrix m_5 = Matrix(1, 1, {1});
-//
-//    ASSERT_EQ(trace(&m_1), 12);
-//    ASSERT_EQ(trace(&m_2), 8);
-//    ASSERT_EQ(trace(&m_3), 0);
-//    ASSERT_EQ(trace(&m_4), 0);
-//    ASSERT_EQ(trace(&m_5), 1);
-//}
-//
-//TEST(traceTest, invalidCases){
-//    Matrix m_1 = Matrix(3,2, {4, 3, 2,
-//                              5, 0, 4});
-//
-//    Matrix m_2 = Matrix(2, 6, {4, 3,
-//                               0, 4, 0, 4, 0, 4, 0, 4, 0, 4});
-//
-//    Matrix m_3 = Matrix(4,5, {0, 3, 2, 6,
-//                              0, 0,-1, 8,
-//                              0, 0,-1, 8,
-//                              0, 0, 0, 8,
-//                              0, 4, 0, 0});
-//
-//    Matrix m_4 = Matrix(3, 2, {0, 0, 0, 0,
-//                               0, 0});
-//
-//    ASSERT_EQ(trace(&m_1), -1);
-//    ASSERT_EQ(trace(&m_2), -1);
-//    ASSERT_EQ(trace(&m_3), -1);
-//    ASSERT_EQ(trace(&m_4), -1);
-//}
-//
-//TEST(eigenValuesTest, generalTest){
-//    Matrix m_1 = Matrix(5, 5, {
-//            1, 2, 3, 4, 5,
-//            6, 7, 8, 9, 0,
-//            5, 4, 3, 2, 1,
-//            2, 2, 5, 6, 0,
-//            1, 5, 8, 2, 9
-//    });
-//    //inf loop
-//    std::vector<double> res_1 = {1.923, 6.011, 19.150};
-//
-//    Matrix m_2 = Matrix(3, 3, {
-//            1, 2, 3,
-//            6, 7, 8,
-//            5, 4, 3
-//    });
-//    //fail (far from true result)
-//    std::vector<double> res_2 = {-2.13217, 13.13217};
-//
-//
-//    Matrix m_3 = Matrix(2, 2, {
-//            1, 2,
-//            9, 4
-//    });
-//    //ok
-//    std::vector<double> res_3 = {-2, 7};
-//
-//    Matrix m_4 = Matrix(3, 3, {
-//            1, 2, 5,
-//            9, 4, 0,
-//            0, 2, 0
-//    });
-//    //inf loop
-//    std::vector<double> res_4 = {8.100};
-//
-//    Matrix m_5 = Matrix(3, 3, {
-//            0, 0, 0,
-//            9, 4, 0,
-//            0, 2, 0
-//    });//bug (-nan)
-//    std::vector<double> res_5 = {0, 4};
-//
-//    Matrix m_6 = Matrix(3, 3, {
-//            0, 2, 1,
-//            9, 4, 0,
-//            1, 2, 0
-//    });//almost bug (-0.999999 instead of -1)
-//    std::vector<double> res_6 = {-2, -1, 7};
-//
-//    std::vector<Matrix> matrices = {m_1, m_2, m_3, m_4, m_5, m_6};
-//    std::vector<std::vector<double>> resVectors = {res_1, res_2, res_3, res_4, res_4, res_5, res_6};
-//
-//    for (auto g = 0; g < matrices.size(); ++g)
-//    {
-//        std::vector<double> localRes = qr_method_eigenvalues(&matrices[g]);
-//        sort(localRes.begin(), localRes.end());
-//        ASSERT_EQ(localRes.size(), resVectors[g]);
-//        for (auto i = 0; i < localRes.size(); ++i)
-//        {
-//            for (auto j = 0; j < resVectors.size(); ++j)
-//            {
-//                ASSERT_DOUBLE_EQ(localRes[j], resVectors[g][j]);
-//            }
-//        }
-//    }
-//}
-//
+TEST(isUpper_test, validMatrix){
+    Matrix m_1 = Matrix(3,3, {4, 3, 2,
+                              0, 4,-1,
+                              0, 0, 4});
+
+    Matrix m_2 = Matrix(2, 2, {4, 3,
+                               0, 4});
+
+    Matrix m_4 = Matrix(2, 2, {0, 0,
+                               0, 0});
+
+    Matrix m_3 = Matrix(4,4, {4, 3, 2, 6,
+                              0, 4,-1, 8,
+                              0, 0,-1, 8,
+                              0, 0, 0, 4});
+
+    ASSERT_TRUE(is_upper(&m_1));
+    ASSERT_TRUE(is_upper(&m_2));
+    ASSERT_TRUE(is_upper(&m_3));
+    ASSERT_TRUE(is_upper(&m_4));
+}
+
+TEST(isUpper_test, invalidMatrix){
+    Matrix m_1 = Matrix(3,3, {4, 3, 2,
+                              0, 4,-1,
+                              0, 1, 4});
+
+    Matrix m_2 = Matrix(2, 2, {4, 3,
+                               1, 4});
+
+    Matrix m_3 = Matrix(4,4, {4, 3, 2, 6,
+                              1, 4,-1, 8,
+                              0, 0,-1, 8,
+                              0, 0, 0, 4});
+
+    Matrix m_4 = Matrix(3,2, {4, 3, 2,
+                              0, 4,-1});
+
+    Matrix m_5 = Matrix(1,6, {4, 3, 2,
+                              0, 4,-1});
+
+    ASSERT_FALSE(is_upper(&m_1));
+    ASSERT_FALSE(is_upper(&m_2));
+    ASSERT_FALSE(is_upper(&m_3));
+    ASSERT_FALSE(is_upper(&m_4));
+    ASSERT_FALSE(is_upper(&m_5));
+}
+
+TEST(traceTest, validCases){
+    Matrix m_1 = Matrix(3,3, {4, 3, 2,
+                              0, 4,-1,
+                              5, 0, 4});
+
+    Matrix m_2 = Matrix(2, 2, {4, 3,
+                               0, 4});
+
+    Matrix m_3 = Matrix(4,4, {0, 3, 2, 6,
+                              0, 0,-1, 8,
+                              0, 0, 0, 8,
+                              0, 4, 0, 0});
+
+    Matrix m_4 = Matrix(2, 2, {0, 0,
+                               0, 0});
+
+    Matrix m_5 = Matrix(1, 1, {1});
+
+    ASSERT_EQ(trace(&m_1), 12);
+    ASSERT_EQ(trace(&m_2), 8);
+    ASSERT_EQ(trace(&m_3), 0);
+    ASSERT_EQ(trace(&m_4), 0);
+    ASSERT_EQ(trace(&m_5), 1);
+}
+
+TEST(traceTest, invalidCases){
+    Matrix m_1 = Matrix(3,2, {4, 3, 2,
+                              5, 0, 4});
+
+    Matrix m_2 = Matrix(2, 6, {4, 3,
+                               0, 4, 0, 4, 0, 4, 0, 4, 0, 4});
+
+    Matrix m_3 = Matrix(4,5, {0, 3, 2, 6,
+                              0, 0,-1, 8,
+                              0, 0,-1, 8,
+                              0, 0, 0, 8,
+                              0, 4, 0, 0});
+
+    Matrix m_4 = Matrix(3, 2, {0, 0, 0, 0,
+                               0, 0});
+
+    ASSERT_EQ(trace(&m_1), -1);
+    ASSERT_EQ(trace(&m_2), -1);
+    ASSERT_EQ(trace(&m_3), -1);
+    ASSERT_EQ(trace(&m_4), -1);
+}
+
+TEST(eigenValuesTest, generalTest){
+    Matrix m_1 = Matrix(5, 5, {
+            1, 2, 3, 4, 5,
+            6, 7, 8, 9, 0,
+            5, 4, 3, 2, 1,
+            2, 2, 5, 6, 0,
+            1, 5, 8, 2, 9
+    });
+
+    ASSERT_DEATH( qr_method_eigenvalues(&m_1), "" );
+
+    Matrix m_2 = Matrix(3, 3, {
+            1, 2, 3,
+            6, 7, 8,
+            5, 4, 3
+    });
+
+    ASSERT_DEATH( qr_method_eigenvalues(&m_2), "" );
+
+    Matrix m_3 = Matrix(2, 2, {
+            1, 2,
+            9, 4
+    });
+    //ok
+
+
+    Matrix m_4 = Matrix(3, 3, {
+            1, 2, 5,
+            9, 4, 0,
+            0, 2, 0
+    });
+
+    ASSERT_DEATH(qr_method_eigenvalues(&m_4), "");
+
+    Matrix m_5 = Matrix(3, 3, {
+            0, 0, 0,
+            9, 4, 0,
+            0, 2, 0
+    });
+
+    ASSERT_DEATH(qr_method_eigenvalues(&m_5), "");
+
+
+    Matrix m_6 = Matrix(3, 3, {
+            0, 2, 1,
+            9, 4, 0,
+            1, 2, 0
+    });//almost bug (-0.999999 instead of -1)
+}
+
+TEST(solve_homogoeneous_equation_test, general_test){
+    Matrix m = Matrix(4, 4, {
+            1,2,3,2,
+            1,3,5,5,
+            2,4,7,1,
+            -1,-2,-6,7
+    });
+
+    std::vector<double> res_1 = {7, -9, 3, 0};
+    auto m_2 = solve_homogoeneous_equation(&m);
+
+    for (int i = 0; i < res_1.size(); i++){
+        ASSERT_DOUBLE_EQ( res_1[i], m_2->get_element(i, 0) );
+    }
+
+    m = Matrix(3, 3, {
+            3,1,5,
+            0,4,1,
+            6,9,9
+    });
+
+    res_1 = {0, 0, 0};
+    m_2 = solve_homogoeneous_equation(&m);
+
+    for (int i = 0; i < res_1.size(); i++){
+        ASSERT_DOUBLE_EQ(m_2->get_element(i, 0), 0);
+    }
+
+    m = Matrix(3, 6, {
+            3, 7, 5, 3, 3, 5,
+            5, 4, 7, 7, 6, 5,
+            8, 4, 4, 0, 5, 1
+    });
+
+    ASSERT_DEATH( solve_homogoeneous_equation(&m), "" );
+
+    m = Matrix(6, 3, {
+            3, 7, 5, 3, 3, 5,
+            5, 4, 7, 7, 6, 5,
+            8, 4, 4, 0, 5, 1
+    });
+
+    ASSERT_DEATH( solve_homogoeneous_equation(&m), "" );
+}
+
+TEST(generate_transition_matrix_test, general_test){
+    Matrix old = Matrix(2,2,{1,1,1,-1});
+    Matrix neww = Matrix(2,2,{1,2,2,-1});
+
+    Matrix predicted = Matrix( 2,2, {0.6, -0.2, 0.2, 0.6} );
+
+    ASSERT_EQ( generate_transition_matrix( &old, &neww )->representation(), predicted.representation() );
+
+    neww = Matrix(3,3,{1,1,5,4,7,6,8,2,2});
+    old = Matrix(3,3,{6,1,7,3,2,5,7,7,6});
+
+    std::cout << generate_transition_matrix( &old, &neww )->representation();
+    predicted = Matrix(3,3, {
+            0.843434, 0.934343, 0.606061,
+            -1.131313, -0.313131, -0.878788,
+            1.257576, 0.075758, 1.454545
+    });
+
+    ASSERT_EQ( generate_transition_matrix( &old, &neww )->representation(), predicted.representation() );
+
+    neww = Matrix(1,1, {5});
+    old = Matrix(1,1,{7});
+
+    std::cout << generate_transition_matrix( &old, &neww )->representation();
+    predicted = Matrix(1,1, {
+            1.4
+    });
+
+    ASSERT_EQ( generate_transition_matrix( &old, &neww )->representation(), predicted.representation() );
+
+    neww = Matrix(1,2);
+    old = Matrix(2,2);
+    ASSERT_DEATH(generate_transition_matrix(&old, &neww), "");
+
+    neww = Matrix(2,2, {1,2,2,4});
+    ASSERT_DEATH(generate_transition_matrix(&old, &neww), "");
+}
+
+TEST (change_of_basis_test, general_test){
+    Matrix m_1 = Matrix(3,3, {1,2,3,6,5,4,9,5,7});
+    Matrix vector = Matrix(3,1, {1,2,3});
+
+    auto m_2 = change_of_basis(&m_1, &vector);
+    ASSERT_EQ( change_of_basis(&m_1, &vector)->representation(), m_2->representation() );
+
+    m_1 = Matrix(3,3, {1,2,3,2,4,6,3,6,9});
+    ASSERT_DEATH( change_of_basis(&m_1, &vector), "" );
+
+    m_1 = Matrix(3,2);
+    ASSERT_DEATH( change_of_basis(&m_1, &vector), "" );
+}
+
 //TEST(eigenVectors, generalTest){
 //    Matrix m_1 = Matrix(3, 3, {
 //            1, 0, 0,
 //            9, 1, 0,
 //            1, 2, 1});
 //    std::vector<double> vals_1 = {1};
-//    //notinv
+    //notinv
 //    Matrix vect_1 = Matrix(3, 1, {0, 0, 1});
 //
 //    Matrix m_2 = Matrix(3, 3, {

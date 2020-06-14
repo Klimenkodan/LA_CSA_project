@@ -125,8 +125,6 @@ Matrix* inverse(Matrix* matrix1) {
             ident->set_element(i, j, ident->get_element(i,j) / coef );
         }
 
-        std::cout << ident->representation() << "\n";
-
         for (int j = 0; j < matrix->get_width(); j++){
             coef_2 = j == i ? 0: matrix->get_element(j, i);
             matrix->add_to_row(j, i, -coef_2);
@@ -134,8 +132,6 @@ Matrix* inverse(Matrix* matrix1) {
         }
 
     }
-
-    std::cout << ident->representation() << "\n";
 
     return ident;
 
@@ -234,7 +230,6 @@ bool is_upper(Matrix* matrix) {
 	return true;
 }
 
-
 std::map<std::string, Matrix*> QR_factorization(Matrix* matrix) {
 	using std::cout;
 	std::map<std::string, Matrix*> qr;
@@ -293,12 +288,20 @@ std::map<std::string, Matrix*> QR_factorization(Matrix* matrix) {
 }
 
 std::vector<double> qr_method_eigenvalues(Matrix* matrix) {
+    assert( inverse(matrix) != 0 );
 	std::vector<double> eigenvalues;
 	std::map<std::string, Matrix*> qr;
+	int complex_eigenvalues = 0;
+
 	while (!is_upper(matrix)) {
 		qr = QR_factorization(matrix);
 		matrix = multiply_matrix(qr["R"], qr["Q"]);
-//		std::cout << matrix->representation() << std::endl;
+
+        complex_eigenvalues++;
+        if (complex_eigenvalues == 500){
+            std::cout << "Matrix has complex eigenvalues, which is not predicted by the program";
+            assert(complex_eigenvalues != 500);
+        }
 	}
 
 	for (int i = 0; i < matrix->get_width(); i++) {
@@ -319,4 +322,90 @@ Matrix* eigen_vectors(Matrix* matrix, const std::vector<double>& eigenvalues) {
 		result->add_column(cur_vector, i);
 	}
 	return result;
+}
+
+bool is_Hessenberg(Matrix* matrix) {
+    bool upper_values = 1;
+    bool lower_values = 1;
+
+    assert( matrix->get_height() == matrix->get_width() );
+
+    for (int i = 0; i < matrix->get_width() - 2; i++){
+        for (int j = i + 2; j < matrix->get_width(); j++){
+            lower_values &= matrix->get_element(j, i) == 0;
+        }
+    }
+
+    for (int i = 2; i < matrix->get_width(); i++){
+        for (int j = 0; j < i - 1; j++){
+            upper_values &= matrix->get_element(j, i) == 0;
+        }
+    }
+
+    return upper_values || lower_values;
+}
+
+Matrix* solve_homogoeneous_equation(Matrix *m){
+    assert( check_square(m) );
+    auto m_2 = rref(m);
+    int trace_size = 0;
+
+    for (int i = 0; i < m_2->get_width(); i++ ){
+        if ( i < m_2->get_width() && i < m_2->get_height() ){
+            trace_size += m_2->get_element(i, i);
+        } else {
+            break;
+        }
+    }
+
+//    Only trivial solution
+    if ( trace_size == m_2->get_width() && trace_size == m_2->get_height() ){
+        std::cout << "System has only trivial solution \n";
+        return new Matrix( m_2->get_height(), 1 );
+    }
+
+    auto result_matrix = new Matrix( m_2->get_height(), m_2->get_width() - trace_size );
+
+    for (int i = 0; i < result_matrix->get_height(); i++){
+        for (int j = 0; j < result_matrix->get_width(); j++){
+            result_matrix->set_element(i, j, - m->get_element(i, j + trace_size) );
+        }
+    }
+
+    std::cout << "Zero means free variables which should be mentioned as x, y etc. And numbers are coefficients"
+                 " near variables\n";
+    return result_matrix;
+}
+
+Matrix* generate_transition_matrix(Matrix* old_basis, Matrix* new_basis){
+    assert( check_square(old_basis) );
+    assert( check_square(new_basis) );
+    assert( old_basis->get_width() == new_basis->get_width() );
+    assert( determinant(old_basis) != 0 && determinant(new_basis) != 0 );
+
+    double coef, coef_2;
+
+    for(int i = 0; i <  new_basis->get_width() ; i++){
+        coef = new_basis->get_element(i, i);
+
+        for (int j = 0; j < new_basis->get_width(); j++){
+            new_basis->set_element(i, j, new_basis->get_element(i,j) / coef );
+            old_basis->set_element(i, j, old_basis->get_element(i,j) / coef );
+        }
+
+        for (int j = 0; j < new_basis->get_width(); j++){
+            coef_2 = j == i ? 0: new_basis->get_element(j, i);
+            new_basis->add_to_row(j, i, -coef_2);
+            old_basis->add_to_row(j, i, -coef_2);
+        }
+    }
+    return old_basis;
+}
+
+Matrix* change_of_basis(Matrix* transition_matrix, Matrix* vector){
+    assert( check_square(transition_matrix) && determinant(transition_matrix) != 0 );
+    assert(vector->get_height() == transition_matrix->get_height() && vector->get_width() == 1);
+
+    auto result_matrix = multiply_matrix(transition_matrix, vector);
+    return result_matrix;
 }

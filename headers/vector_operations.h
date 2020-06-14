@@ -21,3 +21,5 @@ double collinear_m(Matrix*a , Matrix* b);
 double collinear_v(std::vector<double>* a, std::vector<double>* b);
 
 double norm (Matrix* matrix);
+
+bool is_zero_vector( Matrix* v );
