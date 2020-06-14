@@ -1,4 +1,6 @@
 #include <iostream>
+#include <tgmath.h>
+
 #include <vector>
 #include <string>
 #include <functional>
@@ -16,14 +18,39 @@ int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 
-//    Matrix m_1 = Matrix(3,3, {1,2,3,6,5,4,9,5,7});
-//    Matrix vector = Matrix(3,1, {1,2,3});
+//    Matrix m_1 = Matrix(3, 3, {
+//            0, 0, 0,
+//            9, 4, 0,
+//            0, 2, 0
+//    });
+
+//    Matrix m_1 = Matrix(3, 3, {
+//            1, 0, 0,
+//            9, 1, 0,
+//            1, 2, 1});
+
+//    Matrix m_1 = Matrix(3, 3, {
+//            3,1,5,
+//            0,4,1,
+//            6,9,9
+//    });
 //
-//    auto m_2 = change_of_basis(&m_1, &vector);
+//    std::vector<double> e = qr_method_eigenvalues(&m_1);
+//
+//    auto result = eigen_vectors(&m_1,  &a);
+//
+//    std::cout << solve_homogoeneous_equation(&m_1)->representation() << "\n";
 
-//    std::cout << determinant(&m_1) << "\n";
-//    std::cout << m_1.representation() << "\n";
-//    std::cout << determinant(&old);
+//    qr_method_eigenvalues(&m_1);
+//
+//    std::vector<double> e = qr_method_eigenvalues(&m_1);
+//    for (auto x: e){
+//        std::cout << x << "\n";
+//    }
+//    std::cout << transpose(&m_1)->representation() << "\n";
+//    auto m = eigen_vectors(&m_1, &e);
 
-//    std::cout << m_2->representation() << "\n";
+//    for ( int i = 0; i < res.size(); i++ ){
+//        std::cout <<  qr_method_eigenvalues(&m_1)[i] << " " << res[i] << "\n";
+//    }
 }

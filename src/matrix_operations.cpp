@@ -2,6 +2,7 @@
 #include <cmath>
 #include <map>
 #include <cassert>
+#include <tgmath.h>
 #include "../headers/matrix.h"
 #include "../headers/matrix_operations.h"
 #include "../headers/vector_operations.h"
@@ -287,62 +288,70 @@ std::map<std::string, Matrix*> QR_factorization(Matrix* matrix) {
 	return qr;
 }
 
+void round_matrix(Matrix* arg){
+    for (int i = 0; i < arg->get_height(); i++){
+        for (int j = 0; j < arg->get_width(); j++){
+            if ( round( arg->get_element(i, j) * 1000 ) == 0 ) {
+                arg->set_element( i, j, 0 );
+            }
+        }
+    }
+}
+
 std::vector<double> qr_method_eigenvalues(Matrix* matrix) {
-    assert( inverse(matrix) != 0 );
+
 	std::vector<double> eigenvalues;
 	std::map<std::string, Matrix*> qr;
 	int complex_eigenvalues = 0;
 
-	while (!is_upper(matrix)) {
-		qr = QR_factorization(matrix);
-		matrix = multiply_matrix(qr["R"], qr["Q"]);
+    auto m_2 = matrix->copy();
+    int shift = 0;
+
+    while ( determinant(m_2) == 0 ){
+        m_2 = add_matrix(m_2, identity( m_2->get_width()), 1, 1 );
+        shift++;
+    }
+
+    if (is_upper(transpose(m_2))){
+        m_2 = transpose(m_2);
+    }
+
+	while (!is_upper(m_2)) {
+		qr = QR_factorization(m_2);
+		m_2 = multiply_matrix(qr["R"], qr["Q"]);
 
         complex_eigenvalues++;
         if (complex_eigenvalues == 500){
-            std::cout << "Matrix has complex eigenvalues, which is not predicted by the program";
-            assert(complex_eigenvalues != 500);
+            round_matrix(m_2);
+
+            if ( !is_upper( m_2 ) ){
+                std::cout << "Limit reached\n";
+                assert(complex_eigenvalues != 500);
+            }
+
         }
 	}
 
-	for (int i = 0; i < matrix->get_width(); i++) {
-		eigenvalues.emplace_back(matrix->get_element(i, i));
+	for (int i = 0; i < m_2->get_width(); i++) {
+		eigenvalues.emplace_back(  round( m_2->get_element(i, i) * 1000 ) / 1000 - shift );
 	}
 
 	return eigenvalues;
 
 }
 
-Matrix* eigen_vectors(Matrix* matrix, const std::vector<double>& eigenvalues) {
+Matrix* eigen_vectors(Matrix* matrix, std::vector<double>* eigenvalues) {
 	auto* zero_vector = new Matrix(matrix->get_height(), 1);
 	Matrix* identity_matr = identity(matrix->get_width());
+
 	auto* result = new Matrix(matrix->get_height(), matrix->get_width());
 	Matrix* cur_vector;
+
 	for (int i = 0; i < matrix->get_height(); i++) {
-		cur_vector = solve_equation(add_matrix(matrix, identity_matr, 1, eigenvalues[i] * (-1)), zero_vector);
+		cur_vector = solve_equation(add_matrix(matrix, identity_matr, 1, (*eigenvalues)[i] * (-1)), zero_vector);
 		result->add_column(cur_vector, i);
 	}
 	return result;
-}
-
-bool is_Hessenberg(Matrix* matrix) {
-    bool upper_values = 1;
-    bool lower_values = 1;
-
-    assert( matrix->get_height() == matrix->get_width() );
-
-    for (int i = 0; i < matrix->get_width() - 2; i++){
-        for (int j = i + 2; j < matrix->get_width(); j++){
-            lower_values &= matrix->get_element(j, i) == 0;
-        }
-    }
-
-    for (int i = 2; i < matrix->get_width(); i++){
-        for (int j = 0; j < i - 1; j++){
-            upper_values &= matrix->get_element(j, i) == 0;
-        }
-    }
-
-    return upper_values || lower_values;
 }
 
 Matrix* solve_homogoeneous_equation(Matrix *m){
@@ -368,11 +377,17 @@ Matrix* solve_homogoeneous_equation(Matrix *m){
 
     for (int i = 0; i < result_matrix->get_height(); i++){
         for (int j = 0; j < result_matrix->get_width(); j++){
+            result_matrix->set_element(i, j, -1 );
+        }
+    }
+
+    for (int i = 0; i < trace_size; i++){
+        for (int j = 0; j < result_matrix->get_width(); j++){
             result_matrix->set_element(i, j, - m->get_element(i, j + trace_size) );
         }
     }
 
-    std::cout << "Zero means free variables which should be mentioned as x, y etc. And numbers are coefficients"
+    std::cout << "-1 means free variables which should be mentioned as x, y etc. And numbers are coefficients"
                  " near variables\n";
     return result_matrix;
 }

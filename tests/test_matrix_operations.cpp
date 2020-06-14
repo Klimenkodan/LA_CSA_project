@@ -461,43 +461,61 @@ TEST(eigenValuesTest, generalTest){
 
     ASSERT_DEATH( qr_method_eigenvalues(&m_1), "" );
 
-    Matrix m_2 = Matrix(3, 3, {
+    m_1 = Matrix(3, 3, {
             1, 2, 3,
             6, 7, 8,
             5, 4, 3
     });
 
-    ASSERT_DEATH( qr_method_eigenvalues(&m_2), "" );
+    std::vector<double> res = {13.132, -2.132, 0};
 
-    Matrix m_3 = Matrix(2, 2, {
+    for ( int i = 0; i < res.size(); i++ ){
+        ASSERT_DOUBLE_EQ( qr_method_eigenvalues(&m_1)[i], res[i] );
+    }
+
+    m_1 = Matrix(2, 2, {
             1, 2,
             9, 4
     });
-    //ok
 
+    res = {7, -2};
 
-    Matrix m_4 = Matrix(3, 3, {
+    for ( int i = 0; i < res.size(); i++ ){
+        ASSERT_DOUBLE_EQ( qr_method_eigenvalues(&m_1)[i], res[i] );
+    }
+
+    m_1 = Matrix(3, 3, {
             1, 2, 5,
             9, 4, 0,
             0, 2, 0
     });
 
-    ASSERT_DEATH(qr_method_eigenvalues(&m_4), "");
+    ASSERT_DEATH(qr_method_eigenvalues(&m_1), "");
 
-    Matrix m_5 = Matrix(3, 3, {
+    m_1 = Matrix(3, 3, {
             0, 0, 0,
             9, 4, 0,
             0, 2, 0
     });
 
-    ASSERT_DEATH(qr_method_eigenvalues(&m_5), "");
+    res = {0, 4, 0};
+    for ( int i = 0; i < res.size(); i++ ){
+        ASSERT_DOUBLE_EQ( qr_method_eigenvalues(&m_1)[i], res[i] );
+    }
 
 
-    Matrix m_6 = Matrix(3, 3, {
+
+    m_1 = Matrix(3, 3, {
             0, 2, 1,
             9, 4, 0,
             1, 2, 0
-    });//almost bug (-0.999999 instead of -1)
+    });
+
+    res = {7, -2, -1};
+
+    for ( int i = 0; i < res.size(); i++ ){
+        ASSERT_DOUBLE_EQ( qr_method_eigenvalues(&m_1)[i], res[i] );
+    }
 }
 
 TEST(solve_homogoeneous_equation_test, general_test){
@@ -508,7 +526,7 @@ TEST(solve_homogoeneous_equation_test, general_test){
             -1,-2,-6,7
     });
 
-    std::vector<double> res_1 = {7, -9, 3, 0};
+    std::vector<double> res_1 = {7, -9, 3, -1};
     auto m_2 = solve_homogoeneous_equation(&m);
 
     for (int i = 0; i < res_1.size(); i++){
@@ -556,7 +574,6 @@ TEST(generate_transition_matrix_test, general_test){
     neww = Matrix(3,3,{1,1,5,4,7,6,8,2,2});
     old = Matrix(3,3,{6,1,7,3,2,5,7,7,6});
 
-    std::cout << generate_transition_matrix( &old, &neww )->representation();
     predicted = Matrix(3,3, {
             0.843434, 0.934343, 0.606061,
             -1.131313, -0.313131, -0.878788,
@@ -568,7 +585,7 @@ TEST(generate_transition_matrix_test, general_test){
     neww = Matrix(1,1, {5});
     old = Matrix(1,1,{7});
 
-    std::cout << generate_transition_matrix( &old, &neww )->representation();
+
     predicted = Matrix(1,1, {
             1.4
     });

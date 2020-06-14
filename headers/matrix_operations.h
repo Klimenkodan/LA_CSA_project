@@ -30,7 +30,7 @@ Matrix* inverse(Matrix* a);
 
 std::vector<double> qr_method_eigenvalues(Matrix* matrix);
 
-Matrix* identity(int num_rows); // need to be deleted
+Matrix* identity(int num_rows);
 
 Matrix* solve_equation(Matrix* matrix, Matrix* vector);
 
@@ -40,9 +40,7 @@ double determinant(Matrix* matrix);
 
 double trace(Matrix* matrix);
 
-Matrix* eigen_vectors(Matrix* matrix, const std::vector<double>& eigenvalues);
-
-bool is_Hessenberg(Matrix* matrix);
+Matrix* eigen_vectors(Matrix* matrix, std::vector<double>* eigenvalues);
 
 Matrix* solve_homogoeneous_equation(Matrix *m);
 
