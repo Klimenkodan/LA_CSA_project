@@ -8,13 +8,17 @@
 #include "matrix.h"
 #include <map>
 
+Matrix* inv(Matrix* matrix);
+
 Matrix* row_echelon(Matrix* matrix);
 
 Matrix* rref(Matrix* matrix);
 
-bool sizes_equal(const Matrix* a, const Matrix* b);
+bool sizes_equal(Matrix* a, Matrix* b);
 
 bool is_upper(Matrix* matrix);
+
+bool check_square(Matrix* matrix);
 
 Matrix* add_matrix(Matrix* a, Matrix* b, double a_coef, double b_coef);
 

@@ -6,7 +6,7 @@
 #include <vector>
 #include "matrix.h"
 
-double dot_product(std::vector<double>* a, std::vector<double>* b);
+double dot_product(const std::vector<double>& a, const std::vector<double>& b);
 
 double dot_product(Matrix*a , Matrix* b);
 

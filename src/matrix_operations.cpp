@@ -9,10 +9,6 @@ bool sizes_equal(Matrix* a, Matrix* b) {
 	return (b->get_width() == a->get_width() && b->get_height() == a->get_height());
 }
 
-bool sizes_eq(const Matrix& a, const Matrix& b) {
-	return (b.get_width() == a.get_width() && b.get_height() == a.get_height());
-}
-
 Matrix* add_matrix(Matrix* a, Matrix* b, double a_coef, double b_coef) {
 	assert(sizes_equal(a, b));
 	auto* c = new Matrix(a->get_height(), a->get_width());
@@ -112,58 +108,102 @@ Matrix* rref(Matrix* matrix) {
 	return matrix;
 }
 
-Matrix* inv(Matrix* matrix1) {
-	assert(matrix1->get_width() == matrix1->get_height());
-	Matrix* matrix = matrix1->copy();
-	Matrix* ident = identity(matrix->get_width());
+Matrix* inv(Matrix* matrix) {
+	assert(matrix->get_width() == matrix->get_height());
 
+	Matrix* ident = identity(matrix->get_width());
 	int cur_line = 0;
 	double coef;
 
 	for (int i = 0; i < matrix->get_width(); i++) {
 		for (int j = cur_line; j < matrix->get_height(); j++) {
 			if (matrix->get_element(j, i) != 0) {
-				if (i != j) {
-					std::cout << "swap  " << j << cur_line << std::endl;
-					ident->interchange_rows(j, cur_line);
-					matrix->interchange_rows(j, cur_line);
-				}
-				coef = 1/matrix->get_element(cur_line, i);
-				matrix->multiply_row(cur_line, coef);
-				ident->multiply_row(cur_line, coef);
+				if (j != i) {
 
-				for (int k = 0; k < cur_line; k++) {
-					coef = -1 * (matrix->get_element(k, i) / matrix->get_element(cur_line, i));
-					if (coef != 0) {
-						matrix->add_to_row(k, cur_line, coef);
-						ident->add_to_row(k, cur_line, coef);
+					for (int k = 0; k < j - cur_line; ++k) {
+						matrix->interchange_rows(j - k, j - k - 1);
 					}
 				}
 
 				for (int k = cur_line + 1; k < matrix->get_height(); k++) {
-					coef = -1 * (matrix->get_element(k, i) / matrix->get_element(cur_line, i));
-					if (coef != 0) {
+					coef = -1 * (matrix->get_element(k, cur_line) / matrix->get_element(cur_line, cur_line));
+					if (coef != 0)
 						matrix->add_to_row(k, cur_line, coef);
-						ident->add_to_row(k, cur_line, coef);
-					}
+
 				}
-
-
-
-				std::cout <<matrix->representation() << std::endl << ident->representation() <<std::endl;
 				cur_line++;
 				break;
 			}
 		}
 	}
-////	return matrix;
-	if (!matrix->equal(identity(matrix->get_height()), 0.00005)) {
+	return matrix;
+
+
+}
+
+
+
+
+Matrix* inverse(Matrix* a) {
+	Matrix* b = a->copy();
+	Matrix* ident = identity(a->get_width());
+	int cur_line = 0;
+	double div;
+	double coeff;
+	double interm;
+	double interm_id;
+	for (int j = 0; j < a->get_width(); j++) {
+		for (int i = cur_line; i < a->get_height(); i++) {
+			if (b->get_element(i, j) != 0) {
+				if (i != cur_line) {
+					for (int k = 0; k < a->get_width(); k++) {
+						interm_id = ident->get_element(i, k);
+						ident->set_element(i, k, ident->get_element(cur_line, k));
+						ident->set_element(cur_line, k, interm_id);
+
+						interm = b->get_element(i, k);
+						b->set_element(i, k, b->get_element(cur_line, k));
+						b->set_element(cur_line, k, interm);
+					}
+				}
+				div = b->get_element(cur_line, j);
+				for (int p = 0; p < cur_line; p++) {
+					coeff =  b->get_element(p, j) / div;
+					for (int q = 0; q < a->get_width(); q++) {
+						ident->set_element(p, q, ident->get_element(p, q) - (coeff * ident->get_element(cur_line, q)));
+
+						b->set_element(p, q, b->get_element(p, q) - (coeff * b->get_element(cur_line, q)));
+					}
+				}
+
+
+
+				for (int r = cur_line + 1; r < a->get_height(); r++) {
+					coeff =  b->get_element(r, j) / div;
+					for (int q = 0; q < a->get_width(); q++) {
+						ident->set_element(r, q, ident->get_element(r, q) - (coeff * ident->get_element(cur_line, q)));
+
+						b->set_element(r, q, b->get_element(r, q) - (coeff * b->get_element(cur_line, q)));
+					}
+				}
+
+
+				for (int q = 0; q < a->get_width(); q++) {
+					ident->set_element(cur_line, q, ident->get_element(cur_line, q) / div);
+					b->set_element(cur_line, q, b->get_element(cur_line, q) / div);
+				}
+
+				cur_line ++;
+				break;
+			}
+
+		}
+	}
+	if (!b->equal(identity(b->get_height()), 0.00005)) {
 		std::cout << "the matrix is not invertible" << std::endl;
 		return nullptr;
 	}
-	std::cout << matrix->representation();
 	return ident;
-
 }
 
 
@@ -252,7 +292,6 @@ bool is_upper(Matrix* matrix) {
 	}
 	for (int i = 1; i < matrix->get_height(); i++) {
 		for (int j = 0; j < i; ++j) {
-			//todo:choose method of terminating the loop(precision or number iterations)
 			if (std::abs(matrix->get_element(i, j)) > 0.0000005) {
 				return false;
 			}
@@ -331,4 +370,16 @@ std::vector<double> qr_method_eigenvalues(Matrix* matrix) {
 
 	return eigenvalues;
 
+}
+
+Matrix* eigen_vectors(Matrix* matrix, const std::vector<double>& eigenvalues) {
+	auto* zero_vector = new Matrix(matrix->get_height(), 1);
+	Matrix* identity_matr = identity(matrix->get_width());
+	auto* result = new Matrix(matrix->get_height(), matrix->get_width());
+	Matrix* cur_vector;
+	for (int i = 0; i < matrix->get_height(); i++) {
+		cur_vector = solve_equation(add_matrix(matrix, identity_matr, 1, eigenvalues[i] * (-1)), zero_vector);
+		result->add_column(cur_vector, i);
+	}
+	return result;
 }

@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <mutex>
 
 class Matrix {
 private:
@@ -18,15 +19,16 @@ public:
 
 	Matrix(int m, int n, const std::vector<double>& values);
 
-	int get_width() {
+	int get_width() const {
 		return width;
 	}
 
-	int get_height() {
+	int get_height() const {
 		return height;
 	}
+	double* get_cell_ref(int row_num, int col_num);
 
-	double get_element(int row_num, int col_num);
+	double get_element(int row_num, int col_num) const;
 
 	void set_element(int row_num, int col_num, double el);
 

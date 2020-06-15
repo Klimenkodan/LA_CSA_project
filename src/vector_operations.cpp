@@ -85,7 +85,7 @@ bool collinear(Matrix*a , Matrix* b) {
 
 	if (a->get_height() == 1) {
 		for (int i = 1; i < a->get_width(); i++) {
-			if (coeff != a->get_element(i, 0) / b->get_element(i, 0)) {
+			if (coeff != a->get_element(0, i) / b->get_element(0, i)) {
 				return false;
 			}
 		}
@@ -93,7 +93,7 @@ bool collinear(Matrix*a , Matrix* b) {
 	}
 
 	for (int i = 1; i < a->get_height(); i++) {
-		if (coeff != a->get_element(0, i) / b->get_element(0, i)) {
+		if (coeff != a->get_element(i, 0) / b->get_element(i, 0)) {
 			return false;
 		}
 	}

@@ -6,6 +6,12 @@
 #include <array>
 #include "../headers/vector_operations.h"
 
+double* Matrix::get_cell_ref(int row_num, int col_num) {
+	int idx = col_num + get_width() * row_num;
+
+	return &matrix[idx];
+}
+
 Matrix::Matrix(int m, int n) {
 	assert(m > 0 && n > 0);
 	matrix = new double[m * n]{0};
@@ -23,7 +29,7 @@ Matrix::Matrix(int m, int n, const std::vector<double>& values) {
 	}
 }
 
-double Matrix::get_element(int row_num, int col_num) {
+double Matrix::get_element(int row_num, int col_num) const{
 	assert(check_valid(row_num, col_num, get_width(), get_height()));
 	return matrix[col_num + get_width() * row_num];
 }
@@ -77,7 +83,7 @@ bool Matrix::equal(Matrix* b, double err) {
 	assert(get_height() == b->get_height() && get_width() == b->get_width());
 	for (int i = 0; i < get_height(); i++) {
 		for (int j = 0; j < get_width(); j++) {
-			if (std::abs((get_element(i, j) - b->get_element(i, j) )/ get_element(i, j)) > err) {
+			if (std::abs((get_element(i, j) - b->get_element(i, j) )) > err) {
 				return false;
 			}
 		}
@@ -88,7 +94,7 @@ bool Matrix::equal(Matrix* b, double err) {
 void Matrix::add_column(Matrix* column, int num_column) {
 	assert(num_column >= 0 || num_column < get_width() || is_vector(column) || get_height() == column->get_height());
 	for (int i = 0; i < get_height(); i++) {
-		set_element(i, num_column, column->get_element(num_column, 0));
+		set_element(i, num_column, column->get_element(i, 0));
 	}
 
 }
