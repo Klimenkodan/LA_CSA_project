@@ -6,19 +6,19 @@
 #include <vector>
 #include "matrix.h"
 
-double dot_product(const std::vector<double>& a, const std::vector<double>& b);
+double dot_productV(const std::vector<double>& a, const std::vector<double>& b);
 
 double dot_product(Matrix*a , Matrix* b);
 
 bool is_vector( Matrix* a);
 
-bool orthogonal(Matrix*a , Matrix* b);
+bool orthogonalM(Matrix*a , Matrix* b);
 
 bool orthogonal(std::vector<double>* a, std::vector<double>* b);
 
-bool collinear(Matrix*a , Matrix* b);
+bool collinear_m(Matrix*a , Matrix* b);
 
-bool collinear(std::vector<double>* a, std::vector<double>* b);
+bool collinear_v(std::vector<double>* a, std::vector<double>* b);
 
 double norm (Matrix* matrix);
 

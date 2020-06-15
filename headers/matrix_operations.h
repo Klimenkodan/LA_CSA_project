@@ -8,7 +8,7 @@
 #include "matrix.h"
 #include <map>
 
-Matrix* inv(Matrix* matrix);
+Matrix* inverse(Matrix* matrix1);
 
 Matrix* row_echelon(Matrix* matrix);
 
@@ -30,11 +30,9 @@ int rank(Matrix * a);
 
 std::map<std::string, Matrix*> QR_factorization(Matrix* matrix);
 
-Matrix* inverse(Matrix* a);
-
 std::vector<double> qr_method_eigenvalues(Matrix* matrix);
 
-Matrix* identity(int num_rows); // need to be deleted
+Matrix* identity(int num_rows);
 
 Matrix* solve_equation(Matrix* matrix, Matrix* vector);
 
@@ -44,4 +42,16 @@ double determinant(Matrix* matrix);
 
 double trace(Matrix* matrix);
 
-Matrix* eigen_vectors(Matrix* matrix, const std::vector<double>& eigenvalues);
+Matrix* eigen_vectors(Matrix* matrix, std::vector<double>* eigenvalues);
+
+Matrix* solve_homogoeneous_equation(Matrix *m);
+
+Matrix* generate_transition_matrix(Matrix* m_1, Matrix* m_2);
+
+Matrix* change_of_basis(Matrix* transition_matrix, Matrix* vector);
+
+void round_matrix(Matrix* arg);
+
+void multiply_matrix_row(Matrix* m, int row, double multiplier);
+
+double get_first_nonzero_entry(Matrix* m, int row);

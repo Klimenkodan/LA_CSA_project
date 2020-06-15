@@ -90,125 +90,72 @@ Matrix* row_echelon(Matrix* matrix) {
 }
 
 Matrix* rref(Matrix* matrix) {
-	matrix = row_echelon(matrix);
+	if ( check_square(matrix) && determinant(matrix) != 0 ){
+		return identity(matrix->get_height());
+	}
+
+	auto matrix_2 = row_echelon(matrix);
 	double coef;
-	for (int i = 0; i < matrix->get_height(); i++) {
-		for (int j = i; j < matrix->get_width(); j++) {
-			if (matrix->get_element(i, j) != 0) {
-				matrix->multiply_row(i, 1 / matrix->get_element(i, j));
-				for (int k = 0; k < i; k++) {
-					coef = -1 * (matrix->get_element(k, j) /matrix->get_element(i, j));
-					if (coef != 0)
-						matrix->add_to_row(k, i, coef);
-				}
-				break;
-			}
+	int measure;
+
+	if ( matrix->get_height() > matrix->get_width() ){
+		measure = matrix->get_width();
+	} else {
+		measure = matrix->get_height();
+	}
+
+	for (int i = 0; i < measure; i++){
+		coef = get_first_nonzero_entry(matrix_2, i) != 0 ? get_first_nonzero_entry(matrix_2, i): 1;
+		coef = 1 / coef;
+		multiply_matrix_row(matrix_2, i, coef);
+	}
+
+	for (int i = 0; i < measure; i++ ){
+		for (int j = 0; j < i; j++){
+			coef = matrix_2->get_element(j, i);
+			matrix_2->add_to_row(j, i, -coef);
 		}
 	}
-	return matrix;
+
+
+	return matrix_2;
 }
 
-Matrix* inv(Matrix* matrix) {
-	assert(matrix->get_width() == matrix->get_height());
 
-	Matrix* ident = identity(matrix->get_width());
+
+Matrix* inverse(Matrix* matrix1) {
+	assert(matrix1->get_width() == matrix1->get_height());
+	assert(determinant(matrix1) != 0);
+	Matrix *matrix = matrix1->copy();
+	Matrix *ident = identity(matrix->get_width());
+
 	int cur_line = 0;
-	double coef;
+	double coef, coef_2;
+
 
 	for (int i = 0; i < matrix->get_width(); i++) {
-		for (int j = cur_line; j < matrix->get_height(); j++) {
-			if (matrix->get_element(j, i) != 0) {
-				if (j != i) {
+		coef = matrix->get_element(i, i);
 
-					for (int k = 0; k < j - cur_line; ++k) {
-						matrix->interchange_rows(j - k, j - k - 1);
-					}
-				}
-
-				for (int k = cur_line + 1; k < matrix->get_height(); k++) {
-					coef = -1 * (matrix->get_element(k, cur_line) / matrix->get_element(cur_line, cur_line));
-					if (coef != 0)
-						matrix->add_to_row(k, cur_line, coef);
-
-				}
-				cur_line++;
-				break;
-			}
+		for (int j = 0; j < matrix->get_width(); j++) {
+			matrix->set_element(i, j, matrix->get_element(i, j) / coef);
+			ident->set_element(i, j, ident->get_element(i, j) / coef);
 		}
-	}
-	return matrix;
 
-
-}
-
-
-
-
-Matrix* inverse(Matrix* a) {
-	Matrix* b = a->copy();
-	Matrix* ident = identity(a->get_width());
-	int cur_line = 0;
-	double div;
-	double coeff;
-	double interm;
-	double interm_id;
-	for (int j = 0; j < a->get_width(); j++) {
-		for (int i = cur_line; i < a->get_height(); i++) {
-			if (b->get_element(i, j) != 0) {
-				if (i != cur_line) {
-					for (int k = 0; k < a->get_width(); k++) {
-						interm_id = ident->get_element(i, k);
-						ident->set_element(i, k, ident->get_element(cur_line, k));
-						ident->set_element(cur_line, k, interm_id);
-
-						interm = b->get_element(i, k);
-						b->set_element(i, k, b->get_element(cur_line, k));
-						b->set_element(cur_line, k, interm);
-					}
-				}
-				div = b->get_element(cur_line, j);
-				for (int p = 0; p < cur_line; p++) {
-					coeff =  b->get_element(p, j) / div;
-					for (int q = 0; q < a->get_width(); q++) {
-						ident->set_element(p, q, ident->get_element(p, q) - (coeff * ident->get_element(cur_line, q)));
-
-						b->set_element(p, q, b->get_element(p, q) - (coeff * b->get_element(cur_line, q)));
-					}
-				}
-
-
-
-				for (int r = cur_line + 1; r < a->get_height(); r++) {
-					coeff =  b->get_element(r, j) / div;
-					for (int q = 0; q < a->get_width(); q++) {
-						ident->set_element(r, q, ident->get_element(r, q) - (coeff * ident->get_element(cur_line, q)));
-
-						b->set_element(r, q, b->get_element(r, q) - (coeff * b->get_element(cur_line, q)));
-					}
-				}
-
-
-				for (int q = 0; q < a->get_width(); q++) {
-					ident->set_element(cur_line, q, ident->get_element(cur_line, q) / div);
-					b->set_element(cur_line, q, b->get_element(cur_line, q) / div);
-				}
-
-				cur_line ++;
-				break;
-			}
-
+		for (int j = 0; j < matrix->get_width(); j++) {
+			coef_2 = j == i ? 0 : matrix->get_element(j, i);
+			matrix->add_to_row(j, i, -coef_2);
+			ident->add_to_row(j, i, -coef_2);
 		}
+
 	}
-	if (!b->equal(identity(b->get_height()), 0.00005)) {
-		std::cout << "the matrix is not invertible" << std::endl;
-		return nullptr;
-	}
+
 	return ident;
+
 }
 
 
 
-int rank(Matrix * a) {
+	int rank(Matrix * a) {
 	Matrix* ref = row_echelon(a);
 	int rank = a->get_height();
 	bool empty = true;
@@ -316,7 +263,6 @@ std::map<std::string, Matrix*> QR_factorization(Matrix* matrix) {
 	for (int i = 0; i < cur->get_height(); i++) {
 		Q->set_element(i, 0, cur->get_element(i, 0));
 	}
-	//todo: Computing R is not optimized
 	for (int i = 0; i < matrix->get_width(); ++i) {
 		interm = matrix->copy_column(i);
 		R->set_element(0, i, dot_product(cur, interm));
@@ -352,34 +298,175 @@ std::map<std::string, Matrix*> QR_factorization(Matrix* matrix) {
 	return qr;
 }
 
-std::vector<double> qr_method_eigenvalues(Matrix* matrix) {
-	std::vector<double> eigenvalues;
-	int max_iter = 100;
-	int k = 0;
-	std::map<std::string, Matrix*> qr;
-	while (!is_upper(matrix) || k != max_iter) {
-		qr = QR_factorization(matrix);
+void round_matrix(Matrix* arg){
+	for (int i = 0; i < arg->get_height(); i++){
+		for (int j = 0; j < arg->get_width(); j++){
+			if ( round( arg->get_element(i, j) * 1000 ) == 0 ) {
+				arg->set_element( i, j, 0 );
+			}
+		}
+	}
+}
 
-		matrix = multiply_matrix(qr["R"], qr["Q"]);
-		k++;
+std::vector<double> qr_method_eigenvalues(Matrix* matrix) {
+
+	std::vector<double> eigenvalues;
+	std::map<std::string, Matrix*> qr;
+	int complex_eigenvalues = 0;
+
+	auto m_2 = matrix->copy();
+	int shift = 0;
+
+	while ( determinant(m_2) == 0 ){
+		m_2 = add_matrix(m_2, identity( m_2->get_width()), 1, 1 );
+		shift++;
 	}
 
-	for (int i = 0; i < matrix->get_width(); i++) {
-		eigenvalues.emplace_back(matrix->get_element(i, i));
+	if (is_upper(transpose(m_2))){
+		m_2 = transpose(m_2);
+	}
+
+	while (!is_upper(m_2)) {
+		qr = QR_factorization(m_2);
+		m_2 = multiply_matrix(qr["R"], qr["Q"]);
+
+		complex_eigenvalues++;
+		if (complex_eigenvalues == 500){
+			round_matrix(m_2);
+
+			if ( !is_upper( m_2 ) ){
+				std::cout << "Limit reached\n";
+				assert(complex_eigenvalues != 500);
+			}
+
+		}
+	}
+
+	for (int i = 0; i < m_2->get_width(); i++) {
+		eigenvalues.emplace_back(  round( m_2->get_element(i, i) * 1000 ) / 1000 - shift );
 	}
 
 	return eigenvalues;
 
 }
 
-Matrix* eigen_vectors(Matrix* matrix, const std::vector<double>& eigenvalues) {
-	auto* zero_vector = new Matrix(matrix->get_height(), 1);
-	Matrix* identity_matr = identity(matrix->get_width());
-	auto* result = new Matrix(matrix->get_height(), matrix->get_width());
-	Matrix* cur_vector;
-	for (int i = 0; i < matrix->get_height(); i++) {
-		cur_vector = solve_equation(add_matrix(matrix, identity_matr, 1, eigenvalues[i] * (-1)), zero_vector);
-		result->add_column(cur_vector, i);
+
+Matrix* eigen_vectors(Matrix* matrix, std::vector<double>* eigenvalues) {
+	int size = matrix->get_height();
+	assert( check_square(matrix) );
+	assert( eigenvalues->size() == size );
+
+	Matrix* result = new Matrix( size, size );
+	Matrix* maket;
+
+	for (int i = 0; i < eigenvalues->size(); i++){
+		maket = add_matrix(matrix, identity( size ), 1, -(*eigenvalues)[i] );
+		maket = solve_homogoeneous_equation(maket);
+
+		for (int j = 0; j < maket->get_height(); j++){
+			if ( maket->get_element(j, 0) == -1 ){
+				result->set_element(j, i, 1);
+			} else{
+				result->set_element(j, i, maket->get_element(j, 0));
+			}
+		}
 	}
+
+	return result;
+}
+
+Matrix* solve_homogoeneous_equation(Matrix *m){
+	assert( check_square(m) );
+	auto m_2 = m->copy();
+	int trace_size = 0;
+
+	for (int i = 0; i < m_2->get_width(); i++ ){
+		if ( i < m_2->get_width() && i < m_2->get_height() ){
+			trace_size += m_2->get_element(i, i);
+		} else {
+			break;
+		}
+	}
+
+//    Only trivial solution
+	if ( trace_size == m_2->get_width() && trace_size == m_2->get_height() ){
+		std::cout << "System has only trivial solution \n";
+		return new Matrix( m_2->get_height(), 1 );
+	}
+
+	auto result_matrix = new Matrix( m_2->get_height(), m_2->get_width() - trace_size );
+
+	for (int i = 0; i < result_matrix->get_height(); i++){
+		for (int j = 0; j < result_matrix->get_width(); j++){
+			result_matrix->set_element(i, j, -1 );
+		}
+	}
+
+	for (int i = 0; i < trace_size; i++){
+		for (int j = 0; j < result_matrix->get_width(); j++){
+			result_matrix->set_element(i, j, - m->get_element(i, j + trace_size) );
+		}
+	}
+
+	std::cout << "-1 means free variable which should be mentioned as x, y etc. And numbers are coefficients"
+	             " near variables\n";
+	return result_matrix;
+}
+
+Matrix* generate_transition_matrix(Matrix* old_basis, Matrix* new_basis){
+	assert( check_square(old_basis) );
+	assert( check_square(new_basis) );
+	assert( old_basis->get_width() == new_basis->get_width() );
+	assert( determinant(old_basis) != 0 && determinant(new_basis) != 0 );
+
+	double coef, coef_2;
+
+	for(int i = 0; i <  new_basis->get_width() ; i++){
+		coef = new_basis->get_element(i, i);
+
+		for (int j = 0; j < new_basis->get_width(); j++){
+			new_basis->set_element(i, j, new_basis->get_element(i,j) / coef );
+			old_basis->set_element(i, j, old_basis->get_element(i,j) / coef );
+		}
+
+		for (int j = 0; j < new_basis->get_width(); j++){
+			coef_2 = j == i ? 0: new_basis->get_element(j, i);
+			new_basis->add_to_row(j, i, -coef_2);
+			old_basis->add_to_row(j, i, -coef_2);
+		}
+	}
+	return old_basis;
+}
+
+
+Matrix* change_of_basis(Matrix* transition_matrix, Matrix* vector){
+	assert( check_square(transition_matrix) && determinant(transition_matrix) != 0 );
+	assert(vector->get_height() == transition_matrix->get_height() && vector->get_width() == 1);
+
+	auto result_matrix = multiply_matrix(transition_matrix, vector);
+	return result_matrix;
+}
+
+void multiply_matrix_row(Matrix* m, int row, double multiplier){
+	assert( row >= 0 && row < m->get_height() );
+	double new_value;
+
+	for (int i = 0; i < m->get_width(); i++){
+		new_value = m->get_element(row, i) * multiplier;
+		m->set_element( row, i,  new_value);
+	}
+}
+
+double get_first_nonzero_entry(Matrix* m, int row){
+	assert( row >= 0 && row < m->get_height() );
+	double result = 0;
+
+	for (int i = 0; i < m->get_width(); i++){
+		if ( m->get_element(row, i) != 0 ){
+			result = m->get_element(row, i);
+			return result;
+		}
+	}
+
 	return result;
 }
