@@ -192,7 +192,7 @@ bool collinear_parallel(Matrix*a , Matrix* b, int threadN=2, int task_partition=
     }
 
     if (threadN == 1 || task_partition == 1) {
-        return collinear(a, b);
+        return collinear_m(a, b);
     }
 
     double coeff = a->get_element(0, 0) / b->get_element(0, 0);

@@ -2,6 +2,7 @@
 #include <cmath>
 #include <map>
 #include <cassert>
+#include <tgmath.h>
 #include "../headers/matrix_operations.h"
 #include "../headers/vector_operations.h"
 
