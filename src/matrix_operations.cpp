@@ -62,36 +62,6 @@ Matrix* scalar_multiply(Matrix* a, double mul) {
 }
 
 
-//Matrix* row_echelon(Matrix* a) {
-//	Matrix* b = a->copy();
-//	int cur_line = 0;
-//	double coeff;
-//	double interm;
-//	for (int j = 0; j < a->get_width(); j++) {
-//		for (int i = cur_line; i < a->get_height() - 1; i++) {
-//			if (b->get_element(i, j) != 0) {
-//				if (i != cur_line) {
-//					for (int k = 0; k < a->get_width(); k++) {
-//						interm = b->get_element(i, k);
-//						b->set_element(i, k, b->get_element(cur_line, k));
-//						b->set_element(cur_line, k, interm);
-//					}
-//				}
-//					for (int p = cur_line + 1; p < a->get_height(); p++) {
-//						coeff =  b->get_element(p, j) / b->get_element(cur_line, j);
-//						for (int q = j; q < a->get_width(); q++) {
-//							b->set_element(p, q, b->get_element(p, q) - (coeff * b->get_element(cur_line, q)));
-//						}
-//				}
-//
-//			cur_line ++;
-//			break;
-//			}
-//
-//		}
-//	}
-//	return b;
-//}
 
 Matrix* row_echelon(Matrix* matrix) {
 	using std::cout;
