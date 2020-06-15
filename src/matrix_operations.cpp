@@ -6,6 +6,7 @@
 #include "../headers/matrix.h"
 #include "../headers/matrix_operations.h"
 #include "../headers/vector_operations.h"
+#include "../helper_functions/helper_functions.h"
 
 bool sizes_equal(Matrix* a, Matrix* b) {
 	return (b->get_width() == a->get_width() && b->get_height() == a->get_height());
@@ -89,23 +90,14 @@ Matrix* row_echelon(Matrix* matrix) {
     return matrix;
 }
 
-Matrix* rref(Matrix* matrix) {
-	matrix = row_echelon(matrix);
-	double coef;
-	for (int i = 0; i < matrix->get_height(); i++) {
-		for (int j = i; j < matrix->get_width(); j++) {
-			if (matrix->get_element(i, j) != 0) {
-				matrix->multiply_row(i, 1 / matrix->get_element(i, j));
-				for (int k = 0; k < i; k++) {
-					coef = -1 * (matrix->get_element(k, j) /matrix->get_element(i, j));
-					if (coef != 0)
-						matrix->add_to_row(k, i, coef);
-				}
-				break;
-			}
-		}
-	}
-	return matrix;
+Matrix* rref(Matrix* matrix1) {
+
+//    auto matrix2 =
+
+
+
+
+	return matrix1;
 }
 
 Matrix* inverse(Matrix* matrix1) {
@@ -341,22 +333,34 @@ std::vector<double> qr_method_eigenvalues(Matrix* matrix) {
 }
 
 Matrix* eigen_vectors(Matrix* matrix, std::vector<double>* eigenvalues) {
-	auto* zero_vector = new Matrix(matrix->get_height(), 1);
-	Matrix* identity_matr = identity(matrix->get_width());
+    int size = matrix->get_height();
+	assert( check_square(matrix) );
+	assert( eigenvalues->size() == size );
 
-	auto* result = new Matrix(matrix->get_height(), matrix->get_width());
-	Matrix* cur_vector;
+	Matrix* result = new Matrix( size, size );
+	Matrix* maket;
 
-	for (int i = 0; i < matrix->get_height(); i++) {
-		cur_vector = solve_equation(add_matrix(matrix, identity_matr, 1, (*eigenvalues)[i] * (-1)), zero_vector);
-		result->add_column(cur_vector, i);
+	for (int i = 0; i < eigenvalues->size(); i++){
+	    maket = add_matrix(matrix, identity( size ), 1, -(*eigenvalues)[i] );
+	    maket = solve_homogoeneous_equation(maket);
+
+	    for (int j = 0; j < maket->get_height(); j++){
+	        if ( maket->get_element(j, 0) == -1 ){
+                result->set_element(j, i, 1);
+	        } else{
+                result->set_element(j, i, maket->get_element(j, 0));
+	        }
+	    }
 	}
-	return result;
+
+    return result;
 }
 
 Matrix* solve_homogoeneous_equation(Matrix *m){
     assert( check_square(m) );
-    auto m_2 = rref(m);
+//    auto m_2 = row_echelon( m );
+//    m_2 = rref(m);
+    auto m_2 = m->copy();
     int trace_size = 0;
 
     for (int i = 0; i < m_2->get_width(); i++ ){
@@ -387,7 +391,7 @@ Matrix* solve_homogoeneous_equation(Matrix *m){
         }
     }
 
-    std::cout << "-1 means free variables which should be mentioned as x, y etc. And numbers are coefficients"
+    std::cout << "-1 means free variable which should be mentioned as x, y etc. And numbers are coefficients"
                  " near variables\n";
     return result_matrix;
 }
@@ -423,4 +427,28 @@ Matrix* change_of_basis(Matrix* transition_matrix, Matrix* vector){
 
     auto result_matrix = multiply_matrix(transition_matrix, vector);
     return result_matrix;
+}
+
+void multiply_matrix_row(Matrix* m, int row, double multiplier){
+    assert( row >= 0 && row < m->get_height() );
+    double new_value;
+
+    for (int i = 0; i < m->get_width(); i++){
+        new_value = m->get_element(row, i) * multiplier;
+        m->set_element( row, i,  new_value);
+    }
+}
+
+double get_first_nonzero_entry(Matrix* m, int row){
+    assert( row >= 0 && row < m->get_height() );
+    double result = 0;
+
+    for (int i = 0; i < m->get_width(); i++){
+        if ( m->get_element(row, i) != 0 ){
+            result = m->get_element(row, i);
+            return result;
+        }
+    }
+
+    return result;
 }

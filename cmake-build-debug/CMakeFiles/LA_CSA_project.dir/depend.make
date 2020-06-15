@@ -14,6 +14,7 @@ CMakeFiles/LA_CSA_project.dir/main.cpp.o: ../main.cpp
 CMakeFiles/LA_CSA_project.dir/src/matrix_operations.cpp.o: ../headers/matrix.h
 CMakeFiles/LA_CSA_project.dir/src/matrix_operations.cpp.o: ../headers/matrix_operations.h
 CMakeFiles/LA_CSA_project.dir/src/matrix_operations.cpp.o: ../headers/vector_operations.h
+CMakeFiles/LA_CSA_project.dir/src/matrix_operations.cpp.o: ../helper_functions/helper_functions.h
 CMakeFiles/LA_CSA_project.dir/src/matrix_operations.cpp.o: ../src/matrix_operations.cpp
 
 CMakeFiles/LA_CSA_project.dir/src/vector_operations.cpp.o: ../headers/matrix.h

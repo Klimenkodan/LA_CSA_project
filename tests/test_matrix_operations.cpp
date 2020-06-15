@@ -518,50 +518,50 @@ TEST(eigenValuesTest, generalTest){
     }
 }
 
-TEST(solve_homogoeneous_equation_test, general_test){
-    Matrix m = Matrix(4, 4, {
-            1,2,3,2,
-            1,3,5,5,
-            2,4,7,1,
-            -1,-2,-6,7
-    });
-
-    std::vector<double> res_1 = {7, -9, 3, -1};
-    auto m_2 = solve_homogoeneous_equation(&m);
-
-    for (int i = 0; i < res_1.size(); i++){
-        ASSERT_DOUBLE_EQ( res_1[i], m_2->get_element(i, 0) );
-    }
-
-    m = Matrix(3, 3, {
-            3,1,5,
-            0,4,1,
-            6,9,9
-    });
-
-    res_1 = {0, 0, 0};
-    m_2 = solve_homogoeneous_equation(&m);
-
-    for (int i = 0; i < res_1.size(); i++){
-        ASSERT_DOUBLE_EQ(m_2->get_element(i, 0), 0);
-    }
-
-    m = Matrix(3, 6, {
-            3, 7, 5, 3, 3, 5,
-            5, 4, 7, 7, 6, 5,
-            8, 4, 4, 0, 5, 1
-    });
-
-    ASSERT_DEATH( solve_homogoeneous_equation(&m), "" );
-
-    m = Matrix(6, 3, {
-            3, 7, 5, 3, 3, 5,
-            5, 4, 7, 7, 6, 5,
-            8, 4, 4, 0, 5, 1
-    });
-
-    ASSERT_DEATH( solve_homogoeneous_equation(&m), "" );
-}
+//TEST(solve_homogoeneous_equation_test, general_test){
+//    Matrix m = Matrix(4, 4, {
+//            1,2,3,2,
+//            1,3,5,5,
+//            2,4,7,1,
+//            -1,-2,-6,7
+//    });
+//
+//    std::vector<double> res_1 = {7, -9, 3, -1};
+//    auto m_2 = solve_homogoeneous_equation(&m);
+//
+//    for (int i = 0; i < res_1.size(); i++){
+//        ASSERT_DOUBLE_EQ( res_1[i], m_2->get_element(i, 0) );
+//    }
+//
+//    m = Matrix(3, 3, {
+//            3,1,5,
+//            0,4,1,
+//            6,9,9
+//    });
+//
+//    res_1 = {0, 0, 0};
+//    m_2 = solve_homogoeneous_equation(&m);
+//
+//    for (int i = 0; i < res_1.size(); i++){
+//        ASSERT_DOUBLE_EQ(m_2->get_element(i, 0), 0);
+//    }
+//
+//    m = Matrix(3, 6, {
+//            3, 7, 5, 3, 3, 5,
+//            5, 4, 7, 7, 6, 5,
+//            8, 4, 4, 0, 5, 1
+//    });
+//
+//    ASSERT_DEATH( solve_homogoeneous_equation(&m), "" );
+//
+//    m = Matrix(6, 3, {
+//            3, 7, 5, 3, 3, 5,
+//            5, 4, 7, 7, 6, 5,
+//            8, 4, 4, 0, 5, 1
+//    });
+//
+//    ASSERT_DEATH( solve_homogoeneous_equation(&m), "" );
+//}
 
 TEST(generate_transition_matrix_test, general_test){
     Matrix old = Matrix(2,2,{1,1,1,-1});

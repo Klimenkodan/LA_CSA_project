@@ -47,3 +47,11 @@ Matrix* solve_homogoeneous_equation(Matrix *m);
 Matrix* generate_transition_matrix(Matrix* m_1, Matrix* m_2);
 
 Matrix* change_of_basis(Matrix* transition_matrix, Matrix* vector);
+
+void round_matrix(Matrix* arg);
+
+void multiply_matrix_row(Matrix* m, int row, double multiplier);
+
+double get_first_nonzero_entry(Matrix* m, int row);
+
+bool check_square(Matrix* matrix);
