@@ -90,14 +90,36 @@ Matrix* row_echelon(Matrix* matrix) {
     return matrix;
 }
 
-Matrix* rref(Matrix* matrix1) {
+Matrix* rref(Matrix* matrix) {
+    if ( check_square(matrix) && determinant(matrix) != 0 ){
+        return identity(matrix->get_height());
+    }
 
-//    auto matrix2 =
+    auto matrix_2 = row_echelon(matrix);
+    double coef;
+    int measure;
+
+    if ( matrix->get_height() > matrix->get_width() ){
+        measure = matrix->get_width();
+    } else {
+        measure = matrix->get_height();
+    }
+
+    for (int i = 0; i < measure; i++){
+        coef = get_first_nonzero_entry(matrix_2, i) != 0 ? get_first_nonzero_entry(matrix_2, i): 1;
+        coef = 1 / coef;
+        multiply_matrix_row(matrix_2, i, coef);
+    }
+
+    for (int i = 0; i < measure; i++ ){
+        for (int j = 0; j < i; j++){
+            coef = matrix_2->get_element(j, i);
+            matrix_2->add_to_row(j, i, -coef);
+        }
+    }
 
 
-
-
-	return matrix1;
+	return matrix_2;
 }
 
 Matrix* inverse(Matrix* matrix1) {
